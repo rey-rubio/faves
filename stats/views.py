@@ -20,6 +20,7 @@ from django.views import generic
 def index(request):
     mlb_teams = mlbgame.teams()
     nba_teams = teams.get_teams()
+    nba_teams = sorted(nba_teams, key=lambda  a: a['abbreviation'], reverse=False)
     context = {
         'mlb_teams': mlb_teams,
         'nba_teams': nba_teams
@@ -34,25 +35,20 @@ def get_teams(request):
     #     print(team)
     #     print(team.team_id)
 
-
     nba_teams = teams.get_teams()
+    nba_teams = sorted(nba_teams, key=lambda  a: a['abbreviation'], reverse=False)
+    #nba_teams = sorted(nba_teams)
     raptors_team_id = 1610612761
     nba_teams_games = []
     gamefinder = leaguegamefinder.LeagueGameFinder()
     games = gamefinder.get_data_frames()[0]
     games_1718 = games[games.SEASON_ID.str[-4:] == '2018']
+    #games_1718 = games_1718.sort_values(by =['TEAM_ABBREVIATION'])
     for team in nba_teams:
         print(team)
-        #team_games_1718 =
-
         team_games_1718 = games_1718[games_1718.TEAM_ABBREVIATION == team['abbreviation']]
-
-
         team_games_1718_date = team_games_1718['GAME_DATE'][:5]
         team_games_1718_matchup = team_games_1718['MATCHUP'][:5]
-        #games_1718 = games[games.SEASON_ID.str[-4:] == '2018' and games.TEAM_ABBREVIATION == team['abbreviation']]
-        #print(team_games_1718_date)
-        #print(team_games_1718_matchup)
 
         print("xxxxxxxxxxxxxxxxxxxxx")
         games = []
@@ -63,11 +59,9 @@ def get_teams(request):
             if 'vs' in matchup:
                 home_team = matchup.split("vs")[0]
                 away_team = matchup.split("vs")[1]
-                #print("home: " + home_team + " away: " + away_team)
             elif '@' in matchup:
                 away_team = matchup.split("@")[0]
                 home_team = matchup.split("@")[1]
-                #print("home: " + home_team + " away: " + away_team)
 
             away_team = away_team.strip()
             home_team = home_team.strip()
@@ -76,22 +70,10 @@ def get_teams(request):
         print("xxxxxxxxxxxxxxxxxxxxx")
         print(list(games))
 
-        # team_games_1718_data = {'date': team_games_1718_date,
-        #                         'matchup': team_games_1718_matchup}
-
-        # print(".................")
-        # print(team_games_1718_data)
-        # print(".................")
-        # games = gamefinder.get_data_frames()[0]
-        # games_1718 = games[games.SEASON_ID.str[-4:] == '2018']
-        # games_1718.head()
-        # games.head()
         nba_team_games = {'team_name': team['abbreviation'],
                           'team_games': games}
         nba_teams_games.append(nba_team_games)
-        # if (team['id'] == raptors_team_id):
-        #     # Query for games where the Celtics were playing
-        #     print("FOUND raptors")
+
 
     # teams.sort(key = lambda team: team.team_id)
     # #game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
@@ -129,9 +111,6 @@ def get_teams(request):
         'nba_teams': nba_teams,
         'nba_teams_games': nba_teams_games
     }
-    #print("nba_teams_games....")
-    #print(nba_teams_games)
-
     print("........................................")
     return render(request, 'stats/index.html', context)
 # class IndexView(generic.ListView):

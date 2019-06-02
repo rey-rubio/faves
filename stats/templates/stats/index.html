@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'stats/style.css' %}">
 
 
@@ -45,10 +45,10 @@
     {% for nba_team in nba_teams %}
 
         <div class="card-column">
-            <div class="card">
+            <div data-content={{ nba_team.abbreviation }} class="card">
                 <div class="container">
-                    <h3>{{ nba_team.full_name }} ({{ nba_team.abbreviation }})</h3>
-                    <p>{{ nba_team.id }}</p>
+                    <h3 data-content={{ nba_team.abbreviation }}>{{ nba_team.full_name }} ({{ nba_team.abbreviation }})</h3>
+                    <p data-content={{ nba_team.abbreviation }}>{{ nba_team.id }}</p>
                     {% for nba_team_game in nba_teams_games %}
                         {% if nba_team_game.team_name == nba_team.abbreviation %}
                             {% for item in nba_team_game.team_games %}
