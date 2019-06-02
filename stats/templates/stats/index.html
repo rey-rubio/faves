@@ -1,0 +1,117 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'stats/style.css' %}">
+
+
+{#{% if games %}#}
+{#    <ul>#}
+{#        {% for question in latest_question_list %}#}
+{##}
+{#            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>#}
+{##}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#{% else %}#}
+{#    <p>No polls are available.</p>#}
+{#{% endif %}#}
+
+
+{#<h1>Rey's MLB Stats</h1>#}
+{#<div class="card-row">#}
+{#    {% for mlb_team in mlb_teams %}#}
+{##}
+{#        <div class="card-column">#}
+{#            <div class="card">#}
+{#                <div class="container">#}
+{#                    <h3>{{ mlb_team }}</h3>#}
+{#                    <p>{{ mlb_team.team_id }}</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    {% endfor %}#}
+{#</div>#}
+
+
+<h1>Rey's NBA Stats</h1>
+
+<form action="{% url 'stats:get_teams' %}" method="get">
+    {#    {% for choice in question.choice_set.all %}#}
+    {#        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">#}
+    {#        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>#}
+    {#    {% endfor %}#}
+    <input type="submit" value="Get Teams">
+</form>
+
+<div class="card-row">
+    {% for nba_team in nba_teams %}
+
+        <div class="card-column">
+            <div class="card">
+                <div class="container">
+                    <h3>{{ nba_team.full_name }} ({{ nba_team.abbreviation }})</h3>
+                    <p>{{ nba_team.id }}</p>
+                    {% for nba_team_game in nba_teams_games %}
+                        {% if nba_team_game.team_name == nba_team.abbreviation %}
+                            {% for item in nba_team_game.team_games %}
+                                <p>{{ item }}</p>
+{#                                {% for v in key %}#}
+{#                                    <p>{{ v }}</p>#}
+{#                                {% endfor %}#}
+                            {% endfor %}
+                            {#                            <table>#}
+                            {#                                <tr>#}
+                            {#                                    <th>Date</th>#}
+                            {#                                    <th>Matchup</th>#}
+                            {#                                </tr>#}
+                            {##}
+                            {#                                {% for key, values in nba_team_game.team_games.items %}#}
+                            {##}
+                            {#                                        <td>{{ key }}</td>#}
+                            {#                                    <td>#}
+                            {#                                        {% for v in values.items %}#}
+                            {#                                            <tr>{{ v }}</tr>#}
+                            {#                                        {% endfor %}#}
+                            {#                                    </td>#}
+                            {#                                {% endfor %}#}
+                            {#                            </table>#}
+                            {#                             <table>#}
+                            {#                                <tr>#}
+                            {#                                    {% for key in nba_team_game.team_games.items %}#}
+                            {#                                        <th> {{ key }} </th>#}
+                            {#                                    {% endfor %}#}
+                            {#                                    <th>Date</th>#}
+                            {#                                    <th>Matchup</th>#}
+                            {#                                </tr>#}
+                            {#                                {% for dict_item  in nba_team_game.team_games %}#}
+                            {#                                     <th> {{ dict_item }} </th>#}
+                            {#                                {% endfor %}#}
+                            {##}
+                            {#                                {% for dict_item  in nba_team_game.team_games.items %}#}
+                            {#                                    <tr>#}
+                            {#                                        {% for v in dict_item %}#}
+                            {#                                            <tr>{{v}}</tr>#}
+                            {#                                        {% endfor %}#}
+                            {#                                    </tr>#}
+                            {#                                {% endfor %}#}
+                            {#                            </table>#}
+                            {#                             {% for values in nba_team_game.team_games.items %}#}
+                            {#                                 <p>{{ values }}</p>#}
+                            {#                             {% endfor %}#}
+                            {#                             {% for matchup,values in nba_team_game.team_games.matchup %}#}
+                            {#                                 <p>{{ matchup }} {{ values }}</p>#}
+                            {#                             {% endfor %}#}
+                        {% endif %}
+                        {#                         {% if nba_team.id == 1610612761  %}#}
+                        {#                            <p>FOUND RAPTORS</p>#}
+                        {##}
+                        {#                         {% endif %}#}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+
+
