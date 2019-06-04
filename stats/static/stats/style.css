@@ -1,190 +1,252 @@
-
-li a h1{
-    color: blue;
-}
-
-h1{
-    text-align: center;
-}
-/*body {*/
-    /*background: white url("images/me.jpg") no-repeat;*/
+/*li h1{*/
+/*color: blue;*/
 /*}*/
 
-body{
-    background-color: whitesmoke;
+h1 {
+    text-align: center;
 }
 
-[data-content = "ATL"]{
+.container{
+    alignment: center;
+}
+
+/*body {*/
+/*background: white url("images/me.jpg") no-repeat;*/
+/*}*/
+
+/*body{*/
+/*background-color: whitesmoke;*/
+/*}*/
+
+[data-content = "ATL"] {
     background-color: #E03A3E;
     color: #C1D32F;
 }
+
 [data-content="BOS"] {
     background-color: #007A33;
     color: #BA9653;
 }
+
 [data-content="BKN"] {
     background-color: #000000;
     color: #FFFFFF;
 }
+
 [data-content="CHA"] {
     color: #1D1160;
     background-color: #00788C;
 }
+
 [data-content="CHI"] {
     background-color: #CE1141;
     color: #000000;
 }
+
 [data-content="CLE"] {
     color: #6F263D;
     background-color: #FFB81C;
 }
+
 [data-content="DAL"] {
     background-color: #00538C;
     color: #B8C4CA;
 }
+
 [data-content="DEN"] {
     background-color: #0E2240;
     color: #FEC524;
 }
+
 [data-content="DET"] {
     color: #C8102E;
     background-color: #006BB6;
 }
+
 [data-content="GSW"] {
     background-color: #006BB6;
     color: #FDB927;
 }
+
 [data-content="HOU"] {
     background-color: #CE1141;
     color: #000000;
 }
+
 [data-content="IND"] {
     color: #002D62;
     background-color: #FDBB30;
 }
+
 [data-content="LAC"] {
     color: #C8102E;
     background-color: #1D428A;
 }
+
 [data-content="LAL"] {
     color: #552583;
     background-color: #FDB927;
 }
+
 [data-content="MEM"] {
     color: #5D76A9;
     background-color: #12173F;
 }
+
 [data-content="MIA"] {
     background-color: #98002E;
     color: #000000;
 }
+
 [data-content="MIL"] {
     background-color: #00471B;
     color: #EEE1C6;
 }
+
 [data-content="MIN"] {
     background-color: #0C2340;
     color: #9EA2A2;
 }
+
 [data-content="NOP"] {
     background-color: #0C2340;
     color: #85714D;
 }
+
 [data-content="NYK"] {
     background-color: #006BB6;
     color: #F58426;
 }
+
 [data-content="OKC"] {
     background-color: #007AC1;
     color: #EF3B24;
 }
+
 [data-content="ORL"] {
     background-color: #0077C0;
     color: #C4CED4;
 }
+
 [data-content="PHI"] {
     background-color: #006BB6;
     color: #ED174C;
 }
+
 [data-content="PHX"] {
     background-color: #1D1160;
     color: #E56020;
 }
+
 [data-content="POR"] {
     background-color: #E03A3E;
     color: #000000;
 }
+
 [data-content="SAC"] {
     background-color: #5A2D81;
     color: #63727A;
 }
+
 [data-content="SAS"] {
     color: #C4CED4;
     background-color: #000000;
 }
+
 [data-content="TOR"] {
     background-color: #CE1141;
     color: #000000;
 }
+
 [data-content="UTA"] {
     background-color: #002B5C;
     color: #F9A01B;
 }
+
 [data-content="WAS"] {
     color: #002B5C;
     background-color: #E31837;
 }
 
-.main {
-    background-color: orange;
 
-}
+
+/*a.fill-div {*/
+    /*display: block;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*text-decoration: none;*/
+    /*!* edit: added z-index *!*/
+    /*!*z-index: 1;*!*/
+
+  /*!* edit: fixes overlap error in IE7/8,*/
+     /*make sure you have an empty gif *!*/
+    /*!*background-image: url('../images/test.gif');*!*/
+    /*!*background-repeat: no-repeat;*!*/
+/*}*/
+
+/*.card:first-child{*/
+    /*pointer-events : none;*/
+/*}*/
+
+/*.card:active{*/
+    /*top: +2px;*/
+/*}*/
 
 /* Float four columns side by side */
 .card-column {
-  float: left;
-  width: 25%;
+    float: left;
+    width: 22.5%;
+    margin: 10px 10px;
 }
 
 /* Remove extra left and right margins, due to padding in columns */
-.card-row {margin: 0 -5px;}
+.card-row {
+    /*margin: 0 -2px;*/
+    /*margin: 0 10px;*/
+}
 
 /* Clear floats after the columns */
 .card-row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .card {
     /* Add shadows to create the "card" effect */
     /*background-color: lightgrey;*/
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
     /*width: fit-content; */
-    width:auto;
+    width: auto;
     padding: 16px;
     text-align: center;
+
+
+    /* edit: added z-index */
+
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     /*background-color: darkgrey;*/
     filter: brightness(75%);
 }
 
 /* Add some padding inside the card container */
-.container {
+.card-body {
     padding: 2px 16px;
 }
 
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
+
+/*!* Responsive columns *!*/
+/*@media screen and (max-width: 600px) {*/
+/*.column {*/
+/*width: 100%;*/
+/*display: block;*/
+/*margin-bottom: 20px;*/
+/*}*/
+/*}*/
+

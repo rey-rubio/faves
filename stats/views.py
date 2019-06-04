@@ -9,7 +9,7 @@ from nba_api.stats.static import teams
 import nba_api.stats.endpoints as endpoints
 import nba_api.stats.endpoints.leaguegamefinder as leaguegamefinder
 
-from stats.models import Game
+from stats.models import Game, Team
 
 # Create your views here.
 # def index(request):
@@ -35,8 +35,8 @@ def get_teams(request):
     #     print(team)
     #     print(team.team_id)
 
-    nba_teams = teams.get_teams()
-    nba_teams = sorted(nba_teams, key=lambda  a: a['abbreviation'], reverse=False)
+    nba_teams_data = teams.get_teams()
+    nba_teams_data = sorted(nba_teams_data, key=lambda  a: a['abbreviation'], reverse=False)
     #nba_teams = sorted(nba_teams)
     raptors_team_id = 1610612761
     nba_teams_games = []
@@ -44,36 +44,45 @@ def get_teams(request):
     games = gamefinder.get_data_frames()[0]
     games_1718 = games[games.SEASON_ID.str[-4:] == '2018']
     #games_1718 = games_1718.sort_values(by =['TEAM_ABBREVIATION'])
-    for team in nba_teams:
+
+    nba_teams = []
+
+    for team in nba_teams_data:
         print(team)
+
+        # Get columns from NBA API
         team_games_1718 = games_1718[games_1718.TEAM_ABBREVIATION == team['abbreviation']]
+        team_games_1718_game_id = team_games_1718['GAME_ID'][:5]
         team_games_1718_date = team_games_1718['GAME_DATE'][:5]
         team_games_1718_matchup = team_games_1718['MATCHUP'][:5]
 
-        print("xxxxxxxxxxxxxxxxxxxxx")
-        games = []
-        for date,matchup in zip(team_games_1718_date, team_games_1718_matchup):
-            matchup = matchup.replace(".", "")
-            home_team = ""
-            away_team = ""
-            if 'vs' in matchup:
-                home_team = matchup.split("vs")[0]
-                away_team = matchup.split("vs")[1]
-            elif '@' in matchup:
-                away_team = matchup.split("@")[0]
-                home_team = matchup.split("@")[1]
 
-            away_team = away_team.strip()
-            home_team = home_team.strip()
-            print("%s %s vs %s" % (date, away_team, home_team))
-            games.append(Game(date, away_team, home_team))
+        print("xxxxxxxxxxxxxxxxxxxxx")
+        # Iterate through dates and matchup to create Games objects
+        games = []
+        for game_id,date,matchup in zip(team_games_1718_game_id,team_games_1718_date, team_games_1718_matchup):
+            matchup = matchup.replace(".", "")
+            home_team_name = ""
+            away_team_name = ""
+            if 'vs' in matchup:
+                away_team_name = matchup.split("vs")[1]
+                home_team_name = matchup.split("vs")[0]
+            elif '@' in matchup:
+                away_team_name = matchup.split("@")[0]
+                home_team_name = matchup.split("@")[1]
+
+            away_team_name = away_team_name.strip()
+            home_team_name = home_team_name.strip()
+            #print("%s %s vs %s" % (date, away_team_name, home_team_name))
+            games.append(Game(game_id, date, away_team_name, home_team_name))
         print("xxxxxxxxxxxxxxxxxxxxx")
         print(list(games))
 
-        nba_team_games = {'team_name': team['abbreviation'],
-                          'team_games': games}
-        nba_teams_games.append(nba_team_games)
-
+        # Create Team object
+        team_test = Team(team['id'], team['full_name'], team['nickname'], team['abbreviation'])
+        team_test.set_games(games)
+        # Append to array of Teams
+        nba_teams.append(team_test)
 
     # teams.sort(key = lambda team: team.team_id)
     # #game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
@@ -105,11 +114,10 @@ def get_teams(request):
     # stats = mlbgame.player_stats(game.game_id)
     # for player in stats.home_batting:
     #     print(player)
-
+    print(nba_teams)
     context = {
+        'nba_teams': nba_teams
         #'mlb_teams': mlb_teams,
-        'nba_teams': nba_teams,
-        'nba_teams_games': nba_teams_games
     }
     print("........................................")
     return render(request, 'stats/index.html', context)
