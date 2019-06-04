@@ -1,20 +1,22 @@
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'stats/style.css' %}">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'stats/css/style.css' %}">
+<script type="text/javascript" src="{% static 'stats/js/scripts.js' %}"></script>
+{#<link rel="stylesheet" href="{% static "stats/js/scripts.js" %}">#}
+{#<div class="flip-card">#}
+{#  <div class="flip-card-inner">#}
+{#    <div class="flip-card-front">#}
+{#       <img src="{% static "images/hawks.jpg" %}" alt="Avatar" style="width:300px;height:300px;">#}
+{#    </div>#}
+{#    <div class="flip-card-back">#}
+{#      <h1>John Doe</h1>#}
+{#      <p>Architect & Engineer</p>#}
+{#      <p>We love that guy</p>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
 
-
-{#{% if games %}#}
-{#    <ul>#}
-{#        {% for question in latest_question_list %}#}
 {##}
-{#            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>#}
-{##}
-{#        {% endfor %}#}
-{#    </ul>#}
-{#{% else %}#}
-{#    <p>No polls are available.</p>#}
-{#{% endif %}#}
-
-
 {#<h1>Rey's MLB Stats</h1>#}
 {#<div class="card-row">#}
 {#    {% for mlb_team in mlb_teams %}#}
@@ -34,109 +36,57 @@
 <h1>Rey's NBA Stats</h1>
 
 <form action="{% url 'stats:get_teams' %}" method="get">
-    {#    {% for choice in question.choice_set.all %}#}
-    {#        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">#}
-    {#        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>#}
-    {#    {% endfor %}#}
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
     <input type="submit" value="Get Teams">
 </form>
 
 <div class="container">
-    <div class="card-row">
+    <div class="flip-card-row">
         {% for nba_team in nba_teams %}
-            <div class="card-column">
-                <div class="card" data-content={{ nba_team.abbreviation }}>
-                    <div class="card-image">
-                        {#                        <img src="{% static "images/hawks.jpg" %}">#}
-                    </div>
-                    <div class="card-body" data-content={{ nba_team.abbreviation }}>
-                        <h3 class="card-title"
-                            data-content={{ nba_team.abbreviation }}>{{ nba_team.full_name }}({{ nba_team.abbreviation }})</h3>
-                        <p class="card-text" data-content={{ nba_team.abbreviation }}><a
-                                href="https://www.nba.com/{{ nba_team.nickname|lower }}"
-                                target="_blank">{{ nba_team.team_id }}</a></p>
-                        {% for game in nba_team.games %}
-                            <p class="card-text">{{ game.date }} {{ game.away_team_name }}
-                                @ {{ game.home_team_name }}</p>
-                        {% endfor %}
+            <div class="flip-card-column">
+                <div class="flip-card" data-content={{ nba_team.abbreviation }}>
+                    {#                    <div class="card-image">#}
+                    {#                                                <img src="{% static "images/hawks.jpg" %}">#}
+                    {#                    </div>#}
+                    <div class="flip-card-inner" data-content={{ nba_team.abbreviation }}>
+                        <div class="flip-card-front">
+                            <img id="team-logo-{{ nba_team.abbreviation|lower }}"
+                                 src="{% static 'images/' %}{{ nba_team.abbreviation|lower }}.jpg"
+                                 data-src="{{ nba_team.abbreviation|lower }}" style="width:300px;height:300px;">
+                            {#                            <canvas id="myCanvas-{{ nba_team.nickname|lower }}"#}
+                            {#                                    data-src="{{ nba_team.nickname|lower }}"#}
+                            {#                                    style="width:300px;height:300px;"></canvas>#}
+                            {#                            <script type="text/javascript" src="{% static 'stats/js/logos.js ' %}"></script>#}
+                            {#                            <script type="text/javascript"> var static_url = "{% static 'images/'%}{{ nba_team.nickname|lower}}.jpg %}"; setTeamLogo("{{ nba_team.nickname|lower}}","{% static 'images/{{ nba_team.nickname|lower}}.jpg' %}" );#}
+                            {#                             </script>#}
+
+                        </div>
+                        <div class="flip-card-back">
+                            <a href="https://www.nba.com/{{ nba_team.nickname|lower }}"
+                               target="_blank">
+                                <h2 class="card-title" data-content={{ nba_team.abbreviation }}>
+                                    {{ nba_team.full_name }}
+                                </h2>
+                                <h3 class="card-title" data-content={{ nba_team.abbreviation }}>
+                                    ({{ nba_team.abbreviation }})
+                                </h3>
+                            </a>
+                            {#                            <p class="card-text" data-content={{ nba_team.abbsreviation }}></p>#}
+                            {% for game in nba_team.games %}
+                                <a id="box-score-url-{{ nba_team.abbreviation }}-{{ game.game_id }}" href="#" target="_blank">
+                                    <p class="card-text">{{ game.date }} {{ game.away_team_name }} @ {{ game.home_team_name }}</p>
+                                </a>
+                                <script type="text/javascript" src="{% static 'stats/js/logos.js ' %}"></script>
+                                <script type="text/javascript"> getBoxScoreURL("{{ game.game_id }}", "{{ game.date }}", "{{ game.home_team_name }}", "box-score-url-{{ nba_team.abbreviation }}-{{ game.game_id }}"); </script>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
         {% endfor %}
     </div>
 </div>
-
-{#<div class="card-row">#}
-{#    {% for nba_team in nba_teams %}#}
-{##}
-{#        <div class="card-column">#}
-{#            <div data-content={{ nba_team.abbreviation }} class="card">#}
-{#                <div class="container">#}
-{#                    <h3 data-content={{ nba_team.abbreviation }}>{{ nba_team.full_name }}#}
-{#                        ({{ nba_team.abbreviation }})</h3>#}
-{#                    <p data-content={{ nba_team.abbreviation }}>{{ nba_team.id }}</p>#}
-{#                    {% for nba_team_game in nba_teams_games %}#}
-{#                        {% if nba_team_game.team_name == nba_team.abbreviation %}#}
-{#                            {% for item in nba_team_game.team_games %}#}
-{#                                <p>{{ item }}</p>#}
-{#                            {% endfor %}{% endif %}#}
-{#                    {% endfor %}#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    {% endfor %}#}
-{#</div>#}
-
-
-{#<table>#}
-{#                                <tr>#}
-{#                                    <th>Date</th>#}
-{#                                    <th>Matchup</th>#}
-{#                                </tr>#}
-{##}
-{#                                {% for key, values in nba_team_game.team_games.items %}#}
-{##}
-{#                                        <td>{{ key }}</td>#}
-{#                                    <td>#}
-{#                                        {% for v in values.items %}#}
-{#                                            <tr>{{ v }}</tr>#}
-{#                                        {% endfor %}#}
-{#                                    </td>#}
-{#                                {% endfor %}#}
-{#                            </table>#}
-{#                             <table>#}
-{#                                <tr>#}
-{#                                    {% for key in nba_team_game.team_games.items %}#}
-{#                                        <th> {{ key }} </th>#}
-{#                                    {% endfor %}#}
-{#                                    <th>Date</th>#}
-{#                                    <th>Matchup</th>#}
-{#                                </tr>#}
-{#                                {% for dict_item  in nba_team_game.team_games %}#}
-{#                                     <th> {{ dict_item }} </th>#}
-{#                                {% endfor %}#}
-{##}
-{#                                {% for dict_item  in nba_team_game.team_games.items %}#}
-{#                                    <tr>#}
-{#                                        {% for v in dict_item %}#}
-{#                                            <tr>{{v}}</tr>#}
-{#                                        {% endfor %}#}
-{#                                    </tr>#}
-{#                                {% endfor %}#}
-{#                            </table>#}
-{#                             {% for values in nba_team_game.team_games.items %}#}
-{#                                 <p>{{ values }}</p>#}
-{#                             {% endfor %}#}
-{#                             {% for matchup,values in nba_team_game.team_games.matchup %}#}
-{#                                 <p>{{ matchup }} {{ values }}</p>#}
-{#                             {% endfor %}#}
-
-{#                         {% if nba_team.id == 1610612761  %}#}
-{#                            <p>FOUND RAPTORS</p>#}
-{##}
-{#                         {% endif %}#}
-
-
-
-
 

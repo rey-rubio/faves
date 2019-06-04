@@ -1,0 +1,263 @@
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+h1 {
+    text-align: center;
+}
+
+a {
+    color: white;
+}
+
+
+.flip-card {
+    background-color: transparent;
+    width: 300px;
+  height: 300px;
+    text-align: center;
+    border: 1px solid #f1f1f1;
+    perspective: 2000px; /* Remove this if you don't want the 3D effect */
+    padding: 16px;
+    border-radius: 5px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+    /*background-color: #bbb;*/
+    /*color: black;*/
+}
+
+/* Style the back side */
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+
+
+
+
+/*.container {*/
+    /*alignment: center;*/
+/*}*/
+
+
+/* Float four columns side by side */
+.flip-card-column {
+    float: left;
+    width: 23.0%;
+    margin: 20px 20px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.flip-card-row {
+    /*margin: 0 -2px;*/
+    /*margin: 0 10px;*/
+}
+
+/* Clear floats after the columns */
+.flip-card-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/*.card {*/
+/*!* Add shadows to create the "card" effect *!*/
+/*!*background-color: lightgrey;*!*/
+/*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+/*transition: 0.3s;*/
+/*border-radius: 5px; !* 5px rounded corners *!*/
+/*!*width: fit-content; *!*/
+/*width: auto;*/
+/*padding: 16px;*/
+/*text-align: center;*/
+
+
+/*!* edit: added z-index *!*/
+
+/*}*/
+
+/*!* On mouse-over, add a deeper shadow *!*/
+/*.card:hover {*/
+/*box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);*/
+/*!*background-color: darkgrey;*!*/
+/*filter: brightness(75%);*/
+/*}*/
+
+/*!* Add some padding inside the card container *!*/
+/*.card-body {*/
+/*padding: 2px 16px;*/
+/*}*/
+
+
+[data-content = "ATL"] {
+    background-color: #E03A3E;
+    color: #C1D32F;
+}
+
+[data-content="BOS"] {
+    background-color: #007A33;
+    color: #BA9653;
+}
+
+[data-content="BKN"] {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+[data-content="CHA"] {
+    color: #1D1160;
+    background-color: #00788C;
+}
+
+[data-content="CHI"] {
+    background-color: #CE1141;
+    color: #000000;
+}
+
+[data-content="CLE"] {
+    color: #6F263D;
+    background-color: #FFB81C;
+}
+
+[data-content="DAL"] {
+    background-color: #00538C;
+    color: #B8C4CA;
+}
+
+[data-content="DEN"] {
+    background-color: #0E2240;
+    color: #FEC524;
+}
+
+[data-content="DET"] {
+    color: #C8102E;
+    background-color: #006BB6;
+}
+
+[data-content="GSW"] {
+    background-color: #006BB6;
+    color: #FDB927;
+}
+
+[data-content="HOU"] {
+    background-color: #CE1141;
+    color: #000000;
+}
+
+[data-content="IND"] {
+    color: #002D62;
+    background-color: #FDBB30;
+}
+
+[data-content="LAC"] {
+    color: #C8102E;
+    background-color: #1D428A;
+}
+
+[data-content="LAL"] {
+    color: #552583;
+    background-color: #FDB927;
+}
+
+[data-content="MEM"] {
+    color: #5D76A9;
+    background-color: #12173F;
+}
+
+[data-content="MIA"] {
+    background-color: #98002E;
+    color: #000000;
+}
+
+[data-content="MIL"] {
+    background-color: #00471B;
+    color: #EEE1C6;
+}
+
+[data-content="MIN"] {
+    background-color: #0C2340;
+    color: #9EA2A2;
+}
+
+[data-content="NOP"] {
+    background-color: #0C2340;
+    color: #85714D;
+}
+
+[data-content="NYK"] {
+    background-color: #006BB6;
+    color: #F58426;
+}
+
+[data-content="OKC"] {
+    background-color: #007AC1;
+    color: #EF3B24;
+}
+
+[data-content="ORL"] {
+    background-color: #0077C0;
+    color: #C4CED4;
+}
+
+[data-content="PHI"] {
+    /*background-color: #006BB6;*/
+
+    background-color: #C4CED4;
+    color: #ED174C;
+}
+
+[data-content="PHX"] {
+    background-color: #1D1160;
+    color: #E56020;
+}
+
+[data-content="POR"] {
+    background-color: #E03A3E;
+    color: #000000;
+}
+
+[data-content="SAC"] {
+    background-color: #5A2D81;
+    color: #63727A;
+}
+
+[data-content="SAS"] {
+    color: #C4CED4;
+    background-color: #000000;
+}
+
+[data-content="TOR"] {
+    background-color: #CE1141;
+    color: #000000;
+}
+
+[data-content="UTA"] {
+    background-color: #002B5C;
+    color: #F9A01B;
+}
+
+[data-content="WAS"] {
+    color: #002B5C;
+    background-color: #E31837;
+}
