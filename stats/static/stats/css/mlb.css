@@ -1,0 +1,239 @@
+/* Style the navigation bar */
+
+h1 {
+    text-align: center;
+}
+
+a.box-score-url {
+    color: white;
+}
+
+img.team-logo{
+    height:75%;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 275px;
+    height: 275px;
+    text-align: center;
+    border: 1px solid #f1f1f1;
+    perspective: 2000px; /* Remove this if you don't want the 3D effect */
+    padding: 10px;
+    border-radius: 15px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+    /*background-color: #bbb;*/
+    /*color: black;*/
+}
+
+/* Style the back side */
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+
+
+
+
+/*.container {*/
+    /*alignment: center;*/
+/*}*/
+
+
+/*!* Float four columns side by side *!*/
+/*.flip-card-column {*/
+    /*float: left;*/
+    /*width: 22.5%;*/
+    /*margin: 0px 5px 0px 0px;*/
+/*}*/
+
+/*!* Remove extra left and right margins, due to padding in columns *!*/
+/*.flip-card-row {*/
+    /*!*margin: 0 -2px;*!*/
+    /*!*margin: 0 10px;*!*/
+/*}*/
+
+/*!* Clear floats after the columns *!*/
+/*.flip-card-row:after {*/
+    /*content: "";*/
+    /*display: table;*/
+    /*clear: both;*/
+/*}*/
+
+
+[data-content = "ARI"] {
+    background-color: #A71930;
+    color: #E3D4AD;
+}
+
+[data-content="ATL"] {
+    background-color: #13274F;
+    color: #CE1141;
+}
+
+[data-content="BAL"] {
+    color: #000000;
+    background-color: #DF4601;
+}
+
+[data-content="BOS"] {
+    background-color: #BD3039;
+    color: #0C2340;
+}
+
+[data-content="CHC"] {
+    background-color: #0E3386;
+    color: #CC3433;
+}
+
+[data-content="CWS"] {
+    color: #C4CED4;
+    background-color: #27251F;
+}
+
+[data-content="CIN"] {
+    background-color: #C6011F;
+    color: #000000;
+}
+
+[data-content="CLE"] {
+    background-color: #0C2340;
+    color: #E31937;
+}
+
+[data-content="COL"] {
+    color: #33006F;
+    background-color: #C4CED4;
+}
+
+[data-content="DET"] {
+    background-color: #0C2340;
+    color: #FA4616;
+}
+
+[data-content="HOU"] {
+    background-color: #EB6E1F;
+    color: #002D62;
+}
+
+[data-content="KC"] {
+    background-color: #FFFFFF;
+    color: #BD9B60;
+}
+
+[data-content="LAA"] {
+    background-color: #BA0021;
+    color: #003263;
+}
+
+[data-content="LAD"] {
+    background-color: #005A9C;
+    color: #A5ACAF;
+}
+
+[data-content="MIA"] {
+    background-color: #00A3E0;
+    color: #EF3340;
+}
+
+[data-content="MIL"] {
+    background-color: #0A2351;
+    color: #B6922E;
+}
+
+[data-content="MIN"] {
+    background-color: #002B5C;
+    color: #D31145;
+}
+
+[data-content="NYM"] {
+    background-color: #002D72;
+    color: #FF5910;
+}
+
+[data-content="NYY"] {
+    background-color: #0C2340;
+    color: #FFFFFF;
+}
+
+[data-content="OAK"] {
+    background-color: #003831;
+    color: #EFB21E;
+}
+
+[data-content="PHI"] {
+    background-color: #E81828;
+    color: #002D72;
+}
+
+[data-content="PIT"] {
+    background-color: #FDB827;
+    color: #27251F;
+}
+
+[data-content="SD"] {
+    background-color: #A2AAAD;
+    color: #002D62;
+}
+
+[data-content="SEA"] {
+    background-color: #005C5C;
+    color: #C4CED4;
+}
+
+[data-content="SF"] {
+    background-color: #FD5A1E;
+    color: #27251F;
+}
+
+[data-content="STL"] {
+    background-color: #C41E3A;
+    color: #0C2340;
+}
+
+[data-content="TB"] {
+    color: #092C5C;
+    background-color: #8FBCE6;
+}
+
+[data-content="TEX"] {
+    background-color: #003278;
+    color: #C0111F;
+}
+
+[data-content="TOR"] {
+    background-color: #134A8E;
+    color: #E8291C;
+}
+
+[data-content="WSH"] {
+    background-color: #AB0003;
+    color: #14225A;
+}
+
+

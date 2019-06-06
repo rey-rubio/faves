@@ -18,46 +18,41 @@ from django.views import generic
 
 
 def index(request):
-    mlb_teams = mlbgame.teams()
-    nba_teams = teams.get_teams()
-    nba_teams = sorted(nba_teams, key=lambda  a: a['abbreviation'], reverse=False)
-    context = {
-        'mlb_teams': mlb_teams,
-        'nba_teams': nba_teams
-    }
-    return render(request, 'stats/index.html', context)
+    # mlb_teams = mlbgame.teams()
+    #context = get_teams()
+    return render(request, 'stats/index.html', )
+
+def nba(request):
+    # mlb_teams = mlbgame.teams()
+    context = get_nba_teams()
+    return render(request, 'stats/nba.html', context)
+
+def mlb(request):
+    # mlb_teams = mlbgame.teams()
+    context = get_mlb_teams()
+    return render(request, 'stats/mlb.html', context)
 
 
-def get_teams(request):
-    print(get_teams.__name__)
-    #mlb_teams = mlbgame.teams()
-    # for team in mlb_teams:
-    #     print(team)
-    #     print(team.team_id)
+def mlb_team(request):
+    # mlb_teams = mlbgame.teams()
+    context = get_mlb_teams()
+    return render(request, 'stats/mlb.html',)
 
+def get_nba_teams():
     nba_teams_data = teams.get_teams()
     nba_teams_data = sorted(nba_teams_data, key=lambda  a: a['abbreviation'], reverse=False)
-    #nba_teams = sorted(nba_teams)
-    raptors_team_id = 1610612761
-    nba_teams_games = []
     gamefinder = leaguegamefinder.LeagueGameFinder()
     games = gamefinder.get_data_frames()[0]
     games_1718 = games[games.SEASON_ID.str[-4:] == '2018']
-    #games_1718 = games_1718.sort_values(by =['TEAM_ABBREVIATION'])
-
     nba_teams = []
-
     for team in nba_teams_data:
         print(team)
-
         # Get columns from NBA API
         team_games_1718 = games_1718[games_1718.TEAM_ABBREVIATION == team['abbreviation']]
         team_games_1718_game_id = team_games_1718['GAME_ID'][:5]
         team_games_1718_date = team_games_1718['GAME_DATE'][:5]
         team_games_1718_matchup = team_games_1718['MATCHUP'][:5]
 
-
-        print("xxxxxxxxxxxxxxxxxxxxx")
         # Iterate through dates and matchup to create Games objects
         games = []
         for game_id,date,matchup in zip(team_games_1718_game_id,team_games_1718_date, team_games_1718_matchup):
@@ -75,36 +70,60 @@ def get_teams(request):
             home_team_name = home_team_name.strip()
             #print("%s %s vs %s" % (date, away_team_name, home_team_name))
             games.append(Game(game_id, date, away_team_name, home_team_name))
-        print("xxxxxxxxxxxxxxxxxxxxx")
+
         print(list(games))
 
         # Create Team object
-        team_test = Team(team['id'], team['full_name'], team['nickname'], team['abbreviation'])
+        team_test = Team(team['id'], team['full_name'], team['nickname'], team['abbreviation'], "NBA")
         team_test.set_games(games)
         # Append to array of Teams
         nba_teams.append(team_test)
 
-    # teams.sort(key = lambda team: team.team_id)
-    # #game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
-    # #game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
+
+
+    print(nba_teams)
+    context = {
+        'nba_teams': nba_teams
+
+    }
+    print("........................................")
+    # return render(request, 'stats/index.html', context)
+    return context
+
+
+def get_mlb_teams():
+    #print(get_mlb_teams.__name__)
+    mlb_teams_data = mlbgame.teams()
+
+    mlb_teams = []
+    for team in mlb_teams_data:
+        #print(team)
+        #print(team.team_id)
+
+        team_test = Team(team.team_id, team.club_full_name, team.aws_club_slug, team.display_code.upper(), "MLB")
+        mlb_teams.append(team_test)
+
+
+    #game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
+    #game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
     # month = mlbgame.games(2015, 6, home='Yankees')
     # print("Index Stats 1")
     # print(month)
-    # #print(game.game_id)
-    # #stats = mlbgame.player_stats(game.game_id)
-    # #games = mlbgame.combine_games(month)
+    #print(game.game_id)
+    #stats = mlbgame.player_stats(game.game_id)
+    #games = mlbgame.combine_games(month)
     # print("Index Stats 2")
     # # print(stats)
     # # for player in stats.home_batting:
     # #     print(player)
-
+    #
     # print("Index Stats 3")
     # # for game in games:
     # #     print(game)
     #
     # # for player in stats.home_batting:
     # #     print(player)
-
+    #
     # day = mlbgame.day(2015, 4, 12, home='Royals', away='Royals')
     # game = day[0]
     # output = 'Winning pitcher: %s (%s) - Losing Pitcher: %s (%s)'
@@ -114,13 +133,12 @@ def get_teams(request):
     # stats = mlbgame.player_stats(game.game_id)
     # for player in stats.home_batting:
     #     print(player)
-    print(nba_teams)
+    print(mlb_teams)
     context = {
-        'nba_teams': nba_teams
-        #'mlb_teams': mlb_teams,
+        'mlb_teams': mlb_teams
+
     }
-    print("........................................")
-    return render(request, 'stats/index.html', context)
+    return context
 # class IndexView(generic.ListView):
 #     template_name = 'stats/index.html'
 #     context_object_name = 'games'

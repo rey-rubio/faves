@@ -1,21 +1,24 @@
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
-h1 {
-    text-align: center;
-}
 
-a {
+a.box-score-url {
     color: white;
 }
 
-
+img.team-logo{
+    width:200px;
+}
+.center {
+    margin: 100px auto;
+    width: 50%;
+}
 .flip-card {
     background-color: transparent;
-    width: 300px;
-  height: 300px;
+    width: 275px;
+    height: 275px;
     text-align: center;
     border: 1px solid #f1f1f1;
     perspective: 2000px; /* Remove this if you don't want the 3D effect */
-    padding: 16px;
+    padding: 10px;
     border-radius: 5px;
 }
 
@@ -61,25 +64,26 @@ a {
 /*}*/
 
 
-/* Float four columns side by side */
-.flip-card-column {
-    float: left;
-    width: 23.0%;
-    margin: 20px 20px;
-}
+/*!* Float four columns side by side *!*/
+/*.flip-card-column {*/
+    /*float: left;*/
+    /*width: 300px;*/
+    /*margin-right: 10px;*/
+    /*margin-bottom: 10px;*/
+/*}*/
 
-/* Remove extra left and right margins, due to padding in columns */
-.flip-card-row {
-    /*margin: 0 -2px;*/
-    /*margin: 0 10px;*/
-}
+/*!* Remove extra left and right margins, due to padding in columns *!*/
+/*.flip-card-row {*/
+    /*!*margin: 0 -2px;*!*/
+    /*!*margin: 0 10px;*!*/
+/*}*/
 
-/* Clear floats after the columns */
-.flip-card-row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
+/*!* Clear floats after the columns *!*/
+/*.flip-card-row:after {*/
+    /*content: "";*/
+    /*display: table;*/
+    /*clear: both;*/
+/*}*/
 
 /*.card {*/
 /*!* Add shadows to create the "card" effect *!*/
@@ -261,3 +265,5 @@ a {
     color: #002B5C;
     background-color: #E31837;
 }
+
+

@@ -6,5 +6,8 @@ urlpatterns = [
     # path('', views.IndexView.as_view(), name='index'),
 
     path('', views.index, name='index'),
-    path('get_teams/', views.get_teams, name='get_teams'),
+    path('nba/', views.nba, name='nba'),
+    path('mlb/', views.mlb, name='mlb'),
+    # path('mlb/<string:team_name>/', views.mlb_team, name='team'),
+    #path('get_teams/', views.get_teams, name='get_teams'),
 ]

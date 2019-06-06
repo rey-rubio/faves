@@ -14,12 +14,12 @@ class Game:
 
 
 class Team:
-    def __init__(self, team_id, full_name, nickname, abbreviation):
+    def __init__(self, team_id, full_name, nickname, abbreviation, sport):
         self.team_id = team_id
         self.full_name = full_name
         self.nickname = nickname
         self.abbreviation = abbreviation
-        self.abbreviation = abbreviation
+        self.sport = sport
         self.games = []
 
     def set_games(self, games):

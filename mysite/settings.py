@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'detection.apps.DetectionConfig',
     'stats.apps.StatsConfig',
+    'bootstrap4form'
 ]
 
 MIDDLEWARE = [
