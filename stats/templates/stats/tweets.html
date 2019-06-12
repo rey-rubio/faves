@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'stats/css/tweets.css' %}">
+<!-- Load an icon library -->
+{#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="{% static 'stats/js/scripts.js' %}"></script>
+
+<head>
+    {#    {% include "stats/navbar.html" with active_tab='tweets' %}#}
+    {% include "stats/navbar.html" %}
+</head>
+
+<body>
+<div class="container main">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="container users">
+                <h5>Users</h5>
+                {#                <form action ="{% url 'stats:add_twitter_user' 'Rishi_Anand1' %}" class="form-inline my-2 my-lg-0">#}
+                <form action="{% url 'stats:add_twitter_user' %}" method="POST" class="form-inline my-2 my-lg-0">
+                    {% csrf_token %}
+                    <input class="form-control mr-sm-2" name="add_twitter_user" type="text" placeholder="Search">
+{#                    {{ form.instance.user }}#}
+                    <button class="btn btn-outline-success my-2 my-sm-0 bg-light" type="submit">Add User</button>
+                </form>
+                {% for user in users %}
+                    <span class="user">{{ user }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            {% for tweet in tweets %}
+{#                <p>{{ tweet }}</p>#}
+                <a href="https://twitter.com/"target="_blank">
+                    <div class="row tweet">
+                        <div class="col-sm-2 text-right">
+                            <img id="user-{{ tweet.user.screen_name }}"
+                                 src="{{ tweet.user.profile_image_url }}">
+                        </div>
+                        <div class="col-md-10 ">
+                            <a href="https://twitter.com/{{ tweet.user.screen_name }}" target="_blank">
+                                <h5>{{ tweet.user.name }}</h5>
+                            </a>
+                            <a href="https://twitter.com/{{ tweet.user.screen_name }}" target="_blank">
+                                <p>@{{ tweet.user.screen_name }}</p>
+                            </a>
+                            <p>{{ tweet.created_at }}</p>
+                            <p>{{ tweet.text }}</p>
+                            {% if tweet.retweeted_status %}
+                                --> <img id="user-{{ tweet.retweeted_status.user.screen_name }}"
+                                         src="{{ tweet.retweeted_status.user.profile_image_url }}">
+                                <a href="https://twitter.com/{{ tweet.retweeted_status.user.screen_name }}"
+                                   target="_blank">
+                                    <h5>{{ tweet.retweeted_status.user.name }}</h5>
+                                </a>
+                                <a href="https://twitter.com/{{ tweet.retweeted_status.user.screen_name }}"
+                                   target="_blank">
+                                    <p>@{{ tweet.retweeted_status.user.screen_name }}</p>
+                                </a>
+                                <p>-->@{{ tweet.retweeted_status.user.screen_name }}</p>
+                                <p>--> {{ tweet.created_at }}</p>
+                                <p>--> {{ tweet.text }}</p>
+                                {% for url in tweet.retweeted_status.urls %}
+                                    <a href="{{ url.expanded_url }}" target="_blank">
+                                        <p>--> {{ url.expanded_url }}</p>
+                                    </a>
+                                    <a href="{{ url.url }}" target="_blank">
+                                        <p>--> {{ url.url }}</p>
+                                    </a>
+                                {% endfor %}
+
+                                {% if tweet.retweeted_status.media %}
+                                    {% for media in tweet.retweeted_status.media %}
+                                        <a href="{{ media.expanded_url }}" target="_blank">
+                                            <p>--> {{ media.expanded_url }}</p>
+                                        </a>
+                                        <a href="{{ media.url }}" target="_blank">
+                                            <p>--> {{ media.url }}</p>
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
+                                <p>--> Retweets: {{ tweet.retweeted_status.retweet_count }}
+                                    Favorites: {{ tweet.retweeted_status.favorite_count }} </p>
+                            {% else %}
+                                {% for url in tweet.urls %}
+                                    <a href="{{ url.expanded_url }}" target="_blank">
+                                        <p>{{ url.expanded_url }}</p>
+                                    </a>
+                                    <a href="{{ url.url }}" target="_blank">
+                                        <p>{{ url.url }}</p>
+                                    </a>
+                                {% endfor %}
+                                {% if tweet.media %}
+                                    {% for media in tweet.media %}
+                                        <a href="{{ media.expanded_url }}" target="_blank">
+                                            <p>{{ media.expanded_url }}</p>
+                                        </a>
+                                        <a href="{{ media.url }}" target="_blank">
+                                            <p>{{ media.url }}</p>
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
+                                <p>--> Retweets: {{ tweet.retweeted_status.retweet_count }}
+                                    Favorites: {{ tweet.retweeted_status.favorite_count }} </p>
+                                <p>Retweets: {{ tweet.retweet_count }} Favorites: {{ tweet.favorite_count }} </p>
+
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+
+
+
+            {% endfor %}
+        </div>
+        <div class="col-sm-3">
+            Test
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
+<head>
+    <meta charset="UTF-8">
+    {% include "stats/navbar.html" with active_tab='mlb' %}
+</head>
+<body>
+    {{ team }}
+</body>
+</html>
