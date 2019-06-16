@@ -40,6 +40,12 @@
     background-color:whitesmoke;
 }
 
+.retweet-icon{
+    width:15px;
+    height:15px;
+    background: transparent;
+}
+
 .tweet{
     padding: 5px;
     /*margin-left: -5px;*/
@@ -49,4 +55,23 @@
 
 .tweet:hover{
     background-color: #fafafa;
+}
+
+
+.retweet-header{
+    /*color: darkgray;*/
+    padding-left: 50px;
+}
+.retweet-header-font{
+    color: darkgray;
+    /*padding-left: 50px;*/
+}
+
+.user-name{
+    color: black;
+    font-weight:bold;
+}
+
+.user-screen-name{
+    color: darkgray;
 }

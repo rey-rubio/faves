@@ -2,9 +2,12 @@ h1 {
     text-align: center;
     background: linear-gradient(to right, dodgerblue, deepskyblue);
 }
-
 .topnav{
   background-color: dodgerblue;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
 }
 @keyframes slideIn {
   0% {
@@ -40,6 +43,9 @@ h1 {
   animation-name: slideIn;
 }
 
+.dropdown{
+  ;
+}
 
 .dropdown:hover > .dropdown-menu {
     display: block;
@@ -47,4 +53,9 @@ h1 {
 .dropdown > .dropdown-toggle:active {
     /*Without this, clicking will make it sticky*/
     pointer-events: none;
+}
+
+
+.godown{
+   height: 60px;
 }

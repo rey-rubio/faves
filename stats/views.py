@@ -3,7 +3,7 @@ from mysite.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITT
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from django.contrib import messages
 import mlbgame
 
 import nba_api.stats.endpoints.leaguegamefinder as leaguegamefinder
@@ -85,23 +85,32 @@ def get_nba_teams():
     # return render(request, 'stats/index.html', context)
     return context
 
-
+tweets_nba = {}
+tweets_nba = set(tweets_nba)
+users_nba = {"NBA", "wojespn", "ShamsCharania", "ZachLowe_NBA", "sam_amick", "TheSteinLine", "ChrisBHaynes", "davidaldridgedc", "WindhorstESPN"}
 def nba_tweets(request):
-    print(api.VerifyCredentials())
-    users = ["wojespn", "ShamsCharania", "ZachLowe_NBA", "sam_amick",
-             "TheSteinLine", "ChrisBHaynes", "davidaldridgedc", "WindhorstESPN"]
-    tweets = []
-    for user in users:
-        tweets.extend(api.GetUserTimeline(screen_name=user, count=5))
-        tweets.sort(key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'), reverse = True)
+    print(nba_tweets.__name__)
+    print(request)
+    print(request.get_full_path())
+    for user in users_nba:
+        data = api.GetUserTimeline(screen_name=user, count=5)
 
-    print(tweets)
+        for new_tweet in data:
+            #print(new_tweet)
+            #print(new_tweet.id)
+            if not any(new_tweet.id == tweet.id for tweet in tweets_nba):
+                tweets_nba.add(new_tweet)
+
+    sorted_tweets_nba = sorted(tweets_nba, key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
+                               reverse=True)
+
+    print(tweets_mlb)
     context = {
-        'tweets': tweets,
-        'users': users
+        'tweets': sorted_tweets_nba,
+        'users': users_nba
     }
 
-    return render(request, 'stats/tweets.html', context )
+    return render(request, 'stats/tweets.html', context)
 
 #################################################################
 #################################################################
@@ -202,65 +211,75 @@ def get_mlb_teams():
     return context
 
 
-tweets = []
-users = {"MLB"}
-
+tweets_mlb = {}
+tweets_mlb = set(tweets_mlb)
+users_mlb = {"MLB", "Yankees", "JeffPassan", "mlbtraderumors", "Ken_Rosenthal", "JonHeymanCBS", "Buster_ESPN"	}
 def mlb_tweets(request):
 
-    # print(api.VerifyCredentials())
+    print(mlb_tweets.__name__)
+    print(request)
+    print(request.get_full_path())
+    for user in users_mlb:
+        data = api.GetUserTimeline(screen_name=user, count=5)
 
-    for user in users:
-        tweets.extend(api.GetUserTimeline(screen_name=user, count=5))
+        for new_tweet in data:
+            #print(new_tweet)
+            #print(new_tweet.id)
+            if not any(new_tweet.id == tweet.id for tweet in tweets_mlb):
+                tweets_mlb.add(new_tweet)
 
-    tweets.sort(key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'), reverse=True)
+    sorted_tweets_mlb = sorted(tweets_mlb, key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'), reverse=True )
 
-    print(tweets)
+    print(tweets_mlb)
     context = {
-        'tweets': tweets,
-        'users': users
+        'tweets': sorted_tweets_mlb,
+        'users': users_mlb
     }
 
     return render(request, 'stats/tweets.html', context )
-# class IndexView(generic.ListView):
-#     template_name = 'stats/index.html'
-#     context_object_name = 'games'
-#     month = mlbgame.games(2019, 6, home='Yankees')
-#     games = mlbgame.combine_games(month)
-# def get_queryset(self):
-#     """Return the last five published questions."""
-#     return Question.objects.order_by('-pub_date')[:5]
 
 
 def add_twitter_user(request):
     print(add_twitter_user.__name__)
-    # try:
-    #     #selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    # except (KeyError, Choice.DoesNotExist):
-    #     return render(request, 'polls/detail.html', {
-    #         'question': question,
-    #         'error_message': "You didn't select a choice.",
-    #     })
-    # else:
-    #     selected_choice.votes += 1
-    #     selected_choice.save()
-    api = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
-                      consumer_secret=TWITTER_CONSUMER_SECRET,
-                      access_token_key=TWITTER_CONSUMER_ACCESS_TOKEN_KEY,
-                      access_token_secret=TWITTER_CONSUMER_TOKEN_SECRET)
+    print(request)
+    print(request.get_full_path())
     if request.method == 'POST':
         user = request.POST.get('add_twitter_user', None)
         print(user)
-        users.add(user)
-        print(users)
+        #print(users_nba)
+        # messages.info(request, 'Successfully added user' + user)
         try:
-            print(api.VerifyCredentials())
-            # data = api.GetUserTimeline(screen_name=user, count=5)
-            tweets.extend(api.GetUserTimeline(screen_name=user, count=5))
+            data = api.GetUserTimeline(screen_name=user, count=5)
+            for new_tweet in data:
+                #print(new_tweet)
+                #print(new_tweet.id)
+                if ("nba" in request.get_full_path()):
+                    users_nba.add(user)
+                    if not any(new_tweet.id == tweet.id for tweet in tweets_nba):
+                        tweets_nba.add(new_tweet)
+
+                elif ("mlb" in request.get_full_path()):
+                    users_mlb.add(user)
+                    if not any(new_tweet.id == tweet.id for tweet in tweets_mlb):
+                        tweets_mlb.add(new_tweet)
+
+            sorted_tweets_nba = sorted(tweets_nba,
+                                       key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
+                                       reverse=True)
+            sorted_tweets_mlb = sorted(tweets_mlb,
+                                       key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
+                                       reverse=True)
         except Exception as err:
-            #return HttpResponseRedirect(reverse('stats:mlb_tweets'))
             print(err.message)
             for i in err.message:
                 print(i)
 
         # print(request.POST['user'])
-    return HttpResponseRedirect(reverse('stats:mlb_tweets'))
+    if ("nba" in request.get_full_path()):
+        return HttpResponseRedirect(reverse('stats:nba_tweets'))
+    elif ("mlb" in request.get_full_path()):
+        return HttpResponseRedirect(reverse('stats:mlb_tweets'))
+    else:
+        return HttpResponseRedirect(reverse('stats:nba_tweets'))
+
+
