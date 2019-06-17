@@ -106,6 +106,7 @@ def nba_tweets(request):
 
     print(tweets_mlb)
     context = {
+        'sport': "nba",
         'tweets': sorted_tweets_nba,
         'users': users_nba
     }
@@ -232,6 +233,7 @@ def mlb_tweets(request):
 
     print(tweets_mlb)
     context = {
+        'sport': "mlb",
         'tweets': sorted_tweets_mlb,
         'users': users_mlb
     }
@@ -239,10 +241,12 @@ def mlb_tweets(request):
     return render(request, 'stats/tweets.html', context )
 
 
-def add_twitter_user(request):
+
+def add_twitter_user(request, sport):
     print(add_twitter_user.__name__)
     print(request)
     print(request.get_full_path())
+    print(sport)
     if request.method == 'POST':
         user = request.POST.get('add_twitter_user', None)
         print(user)
@@ -250,36 +254,45 @@ def add_twitter_user(request):
         # messages.info(request, 'Successfully added user' + user)
         try:
             data = api.GetUserTimeline(screen_name=user, count=5)
-            for new_tweet in data:
-                #print(new_tweet)
-                #print(new_tweet.id)
-                if ("nba" in request.get_full_path()):
+            #print(new_tweet)
+            #print(new_tweet.id)
+            if (sport.lower() == "nba"):
+                print("nba!!!")
+                for new_tweet in data:
                     users_nba.add(user)
                     if not any(new_tweet.id == tweet.id for tweet in tweets_nba):
                         tweets_nba.add(new_tweet)
 
-                elif ("mlb" in request.get_full_path()):
+                # sorted_tweets_nba = sorted(tweets_nba,
+                #                            key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
+                #                            reverse=True)
+                return HttpResponseRedirect(reverse('stats:nba_tweets'))
+
+            elif (sport.lower() == "mlb"):
+                print("mlb!!!")
+                for new_tweet in data:
                     users_mlb.add(user)
                     if not any(new_tweet.id == tweet.id for tweet in tweets_mlb):
                         tweets_mlb.add(new_tweet)
 
-            sorted_tweets_nba = sorted(tweets_nba,
-                                       key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
-                                       reverse=True)
-            sorted_tweets_mlb = sorted(tweets_mlb,
-                                       key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
-                                       reverse=True)
+                # sorted_tweets_mlb = sorted(tweets_mlb,
+                #                            key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
+                #                            reverse=True)
+                return HttpResponseRedirect(reverse('stats:mlb_tweets'))
+
+
+
         except Exception as err:
             print(err.message)
             for i in err.message:
                 print(i)
 
         # print(request.POST['user'])
-    if ("nba" in request.get_full_path()):
-        return HttpResponseRedirect(reverse('stats:nba_tweets'))
-    elif ("mlb" in request.get_full_path()):
-        return HttpResponseRedirect(reverse('stats:mlb_tweets'))
-    else:
-        return HttpResponseRedirect(reverse('stats:nba_tweets'))
+    # if ("nba" in request.get_full_path()):
+    #     return HttpResponseRedirect(reverse('stats:nba_tweets'))
+    # elif ("mlb" in request.get_full_path()):
+    #     return HttpResponseRedirect(reverse('stats:mlb_tweets'))
+    # else:
+    #     return HttpResponseRedirect(reverse('stats:nba_tweets'))
 
 

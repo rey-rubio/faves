@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'stats/css/tweets.css' %}">
 <!-- Load an icon library -->
-{#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
 <script type="text/javascript" src="{% static 'stats/js/scripts.js' %}"></script>
@@ -20,24 +20,35 @@
     <div class="row">
         <div class="col-sm-3">
             <div class="container users">
-                <h5>Users</h5>
-                {#                <form action ="{% url 'stats:add_twitter_user' 'Rishi_Anand1' %}" class="form-inline my-2 my-lg-0">#}
-                <form action="{% url 'stats:add_twitter_user' %}" method="POST" class="form-inline my-2 my-lg-0">
-                    {% csrf_token %}
-                    <input class="form-control mr-sm-2" name="add_twitter_user" type="text" placeholder="Search">
-                    {#                    {{ form.instance.user }}#}
-                    <button class="btn btn-outline-success my-2 my-sm-0 bg-light" type="submit">Add User</button>
-                </form>
-                {% for user in users %}
-                    <span class="user">{{ user }}</span>
-                {% endfor %}
+
+                <div class="container-fluid users">
+
+                    <h5>Users</h5>
+                    {#                <form action ="{% url 'stats:add_twitter_user' 'Rishi_Anand1' %}" class="form-inline my-2 my-lg-0">#}
+                    <div class="row users-row-test">
+                        <form action="{% url 'stats:add_twitter_user' sport %}" method="POST" class="form-inline my-2 my-lg-0">
+                            {% csrf_token %}
+
+                            <input class="form-control-sm " name="add_twitter_user" type="text" placeholder="Add User">
+                            <button class="btn btn-outline-success btn-sm my-2 my-sm-0 bg-green" type="submit"> <i class="fa fa-plus"></i></button>
+
+                        </form>
+                    </div>
+                    <div class="row users-row-test">
+                        {% for user in users %}
+                            <span class="user">{{ user }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-6">
             {% for tweet in tweets %}
+                {% if not tweet.in_reply_to_user_id %}
+
 {#                                <p>{{ tweet }}</p>#}
                 {#                <a href="https://twitter.com/" target="_blank">#}
-                <div class="row tweet">
+                  <div class="row tweet">
                     {% if tweet.retweeted_status %}
                         <div class="row">
                             <span class="retweet-header"><img class="retweet-icon"
@@ -47,7 +58,9 @@
                                    target="_blank"> {{ tweet.user.screen_name }} Retweeted
                                 </a> </span>
                         </div>
+
                     {% endif %}
+
                     <div class="row">
                         {% if tweet.retweeted_status %}
                             <div class="col-sm-2 text-right">
@@ -55,7 +68,7 @@
                                      src="{{ tweet.retweeted_status.user.profile_image_url }}">
                             </div>
 
-                            <div class="col-md-10">
+                            <div class="col-sm-10">
                                 {#                                    <div>#}
                                 {#                                        <a class="retweeted"#}
                                 {#                                           href="https://twitter.com/{{ tweet.retweeted_status.user.screen_name }}"#}
@@ -111,7 +124,7 @@
                                 <img id="user-{{ tweet.user.screen_name }}"
                                      src="{{ tweet.user.profile_image_url }}">
                             </div>
-                            <div class="col-md-10 ">
+                            <div class="col-sm-10 ">
                                 <div>
                                     <a href="https://twitter.com/{{ tweet.user.screen_name }}"
                                        target="_blank">
@@ -131,14 +144,16 @@
                                     <script type="text/javascript"> getTimeSinceTweetPosted("{{ tweet.created_at }}", "tweet-time-{{ tweet.id }}") </script>
                                 </div>
                                 <div>{{ tweet.text }}</div>
-                                {% for url in tweet.urls %}
-                                    <a href="{{ url.expanded_url }}" target="_blank">
-                                        <p>{{ url.expanded_url }}</p>
-                                    </a>
-{#                                    <a href="{{ url.url }}" target="_blank">#}
-{#                                        <p>{{ url.url }}</p>#}
-{#                                    </a>#}
-                                {% endfor %}
+                                {% if tweet.urls %}
+                                    {% for url in tweet.urls %}
+                                        <a href="{{ url.expanded_url }}" target="_blank">
+                                            <p>{{ url.expanded_url }}</p>
+                                        </a>
+    {#                                    <a href="{{ url.url }}" target="_blank">#}
+    {#                                        <p>{{ url.url }}</p>#}
+    {#                                    </a>#}
+                                    {% endfor %}
+                                {% endif %}
                                 {% if tweet.media %}
                                     {% for media in tweet.media %}
                                         <a href="{{ media.expanded_url }}" target="_blank">
@@ -157,6 +172,7 @@
                     </div>
                 </div>
                 {#                </a>#}
+                {% endif %}
             {% endfor %}
         </div>
         <div class="col-sm-3">

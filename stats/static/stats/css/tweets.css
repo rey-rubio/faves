@@ -28,17 +28,28 @@
     /*max-width:inherit;*/
 }
 
+.users-row-test{
+    margin-left: 15px;
+
+    /*background-color:red;*/
+}
+
 .user{
     /*margin-right: 5px;*/
     /*margin-bottom: 5px;*/
-    padding: 2px;
+    padding: 1px;
     background-color:#fafafa;
-    border: 1px solid blue;
     border-radius: 5px;
+
+    border: 1px solid gray;
 }
 .user:hover{
+
+    border: 1px solid dodgerblue;
     background-color:whitesmoke;
 }
+
+
 
 .retweet-icon{
     width:15px;
