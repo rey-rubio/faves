@@ -26,11 +26,13 @@
                     <h5>Users</h5>
                     {#                <form action ="{% url 'stats:add_twitter_user' 'Rishi_Anand1' %}" class="form-inline my-2 my-lg-0">#}
                     <div class="row users-row-test">
-                        <form action="{% url 'stats:add_twitter_user' sport %}" method="POST" class="form-inline my-2 my-lg-0">
+                        <form action="{% url 'stats:add_twitter_user' sport %}" method="POST"
+                              class="form-inline my-2 my-lg-0">
                             {% csrf_token %}
 
                             <input class="form-control-sm " name="add_twitter_user" type="text" placeholder="Add User">
-                            <button class="btn btn-outline-success btn-sm my-2 my-sm-0 bg-green" type="submit"> <i class="fa fa-plus"></i></button>
+                            <button class="btn btn-outline-success btn-sm my-2 my-sm-0 bg-green" type="submit"><i
+                                    class="fa fa-plus"></i></button>
 
                         </form>
                     </div>
@@ -46,133 +48,161 @@
             {% for tweet in tweets %}
                 {% if not tweet.in_reply_to_user_id %}
 
-{#                                <p>{{ tweet }}</p>#}
-                {#                <a href="https://twitter.com/" target="_blank">#}
-                  <div class="row tweet">
-                    {% if tweet.retweeted_status %}
-                        <div class="row">
+                                                    <p>{{ tweet }}</p>
+                    {#                <a href="https://twitter.com/" target="_blank">#}
+                    <div class="row tweet">
+                        {% if tweet.retweeted_status %}
+                            <div class="row">
                             <span class="retweet-header"><img class="retweet-icon"
                                                               src="{% static 'images/twitter/retweet-arrow-twitter-512.png' %}">
                                 <a class="retweet-header-font"
                                    href="https://twitter.com/{{ tweet.user.screen_name }}"
                                    target="_blank"> {{ tweet.user.screen_name }} Retweeted
                                 </a> </span>
-                        </div>
-
-                    {% endif %}
-
-                    <div class="row">
-                        {% if tweet.retweeted_status %}
-                            <div class="col-sm-2 text-right">
-                                <img id="user-{{ tweet.retweeted_status.user.screen_name }}"
-                                     src="{{ tweet.retweeted_status.user.profile_image_url }}">
                             </div>
 
-                            <div class="col-sm-10">
-                                {#                                    <div>#}
-                                {#                                        <a class="retweeted"#}
-                                {#                                           href="https://twitter.com/{{ tweet.retweeted_status.user.screen_name }}"#}
-                                {#                                           target="_blank"> <span class="retweeted">{{ tweet.user.screen_name }}</span>#}
-                                {#                                        </a> <span class="retweeted">Retweeted</span>#}
-                                {#                                    </div>#}
-                                <div>
-                                    <a href="https://twitter.com/{{ tweet.retweeted_status.user.screen_name }}"
-                                       target="_blank">
-                                        <span class="user-name">{{ tweet.retweeted_status.user.name }}</span>
-                                        {% if tweet.retweeted_status.user.verified %}
-                                            <span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                                       viewbox="0 0 24 24"
-                                                       class="htc-icon htc-icon--verified">
-                                                        <path style="fill: #1DA1F2" opacity="0" d="M0 0h24v24H0z" />
-                                                        <path style="fill: #1DA1F2" d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5c-1.51 0-2.816.917-3.437 2.25-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
+                        {% endif %}
+
+                        <div class="row">
+                            {% if tweet.retweeted_status %}
+                                <div class="col-sm-2 text-right">
+                                    <img id="user-{{ tweet.retweeted_status.user.screen_name }}"
+                                         src="{{ tweet.retweeted_status.user.profile_image_url }}">
+                                </div>
+
+                                <div class="col-sm-10">
+                                    {#                                    <div>#}
+                                    {#                                        <a class="retweeted"#}
+                                    {#                                           href="https://twitter.com/{{ tweet.retweeted_status.user.screen_name }}"#}
+                                    {#                                           target="_blank"> <span class="retweeted">{{ tweet.user.screen_name }}</span>#}
+                                    {#                                        </a> <span class="retweeted">Retweeted</span>#}
+                                    {#                                    </div>#}
+                                    <div>
+                                        <a href="https://twitter.com/{{ tweet.retweeted_status.user.screen_name }}"
+                                           target="_blank">
+                                            <span class="user-name">{{ tweet.retweeted_status.user.name }}</span>
+                                            {% if tweet.retweeted_status.user.verified %}
+                                                <span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                           viewbox="0 0 24 24"
+                                                           class="htc-icon htc-icon--verified">
+                                                        <path style="fill: #1DA1F2" opacity="0" d="M0 0h24v24H0z"/>
+                                                        <path style="fill: #1DA1F2"
+                                                              d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5c-1.51 0-2.816.917-3.437 2.25-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/>
                                             </svg></span>
-                                        {% endif %}
-                                        <span class="user-screen-name"> @{{ tweet.retweeted_status.user.screen_name }}</span>
-                                    </a>
-                                    <span id="retweet-time-{{ tweet.id }}"></span>
-                                    <script type="text/javascript" src="{% static 'stats/js/tweets.js' %}"></script>
-                                    <script type="text/javascript"> getTimeSinceTweetPosted("{{ tweet.created_at }}", "retweet-time-{{ tweet.id }}") </script>
-
-                                </div>
-                                <div>
-                                    <span>{{ tweet.text }}</span>
-                                </div>
-                                {% for url in tweet.retweeted_status.urls %}
-                                    <a href="{{ url.expanded_url }}" target="_blank">
-                                        <p>{{ url.expanded_url }}</p>
-                                    </a>
-                                    <a href="{{ url.url }}" target="_blank">
-                                        <p>{{ url.url }}</p>
-                                    </a>
-                                {% endfor %}
-
-                                {% if tweet.retweeted_status.media %}
-                                    {% for media in tweet.retweeted_status.media %}
-                                        <a href="{{ media.expanded_url }}" target="_blank">
-                                            <p>{{ media.expanded_url }}</p>
+                                            {% endif %}
+                                            <span class="user-screen-name"> @{{ tweet.retweeted_status.user.screen_name }}</span>
                                         </a>
-{#                                        <a href="{{ media.url }}" target="_blank">#}
-{#                                            <p>{{ media.url }}</p>#}
-{#                                        </a>#}
-                                    {% endfor %}
-                                {% endif %}
-                                    <p><img class="retweet-icon" src="{% static 'images/twitter/retweet-arrow-twitter-512.png' %}"> {{ tweet.retweeted_status.retweet_count }}
-                                    <img class="retweet-icon" src="{% static 'images/twitter/favorite-twitter-512.png' %}"> {{ tweet.retweeted_status.favorite_count }} </p>
-                            </div>
-                        {% else %}
-                            <div class="col-sm-2 text-right">
-                                <img id="user-{{ tweet.user.screen_name }}"
-                                     src="{{ tweet.user.profile_image_url }}">
-                            </div>
-                            <div class="col-sm-10 ">
-                                <div>
-                                    <a href="https://twitter.com/{{ tweet.user.screen_name }}"
-                                       target="_blank">
-                                        <span class="user-name">{{ tweet.user.name }}</span>
-                                        {% if tweet.user.verified %}
-                                            <span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                                                       viewbox="0 0 24 24"
-                                                       class="htc-icon htc-icon--verified">
-                                                        <path style="fill: #1DA1F2" opacity="0" d="M0 0h24v24H0z" />
-                                                        <path style="fill: #1DA1F2" d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5c-1.51 0-2.816.917-3.437 2.25-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z" />
-                                            </svg></span>
-                                        {% endif %}
-                                        <span class="user-screen-name"> @{{ tweet.user.screen_name }}</span>
-                                    </a>
-                                    <span id="tweet-time-{{ tweet.id }}"></span>
-                                    <script type="text/javascript" src="{% static 'stats/js/tweets.js' %}"></script>
-                                    <script type="text/javascript"> getTimeSinceTweetPosted("{{ tweet.created_at }}", "tweet-time-{{ tweet.id }}") </script>
-                                </div>
-                                <div>{{ tweet.text }}</div>
-                                {% if tweet.urls %}
-                                    {% for url in tweet.urls %}
+                                        <span id="retweet-time-{{ tweet.id }}"></span>
+                                        <script type="text/javascript" src="{% static 'stats/js/tweets.js' %}"></script>
+                                        <script type="text/javascript"> getTimeSinceTweetPosted("{{ tweet.created_at }}", "retweet-time-{{ tweet.id }}") </script>
+
+                                    </div>
+                                    <div>
+                                        <span>{{ tweet.text }}</span>
+                                    </div>
+                                    {% for url in tweet.retweeted_status.urls %}
                                         <a href="{{ url.expanded_url }}" target="_blank">
                                             <p>{{ url.expanded_url }}</p>
                                         </a>
-    {#                                    <a href="{{ url.url }}" target="_blank">#}
-    {#                                        <p>{{ url.url }}</p>#}
-    {#                                    </a>#}
-                                    {% endfor %}
-                                {% endif %}
-                                {% if tweet.media %}
-                                    {% for media in tweet.media %}
-                                        <a href="{{ media.expanded_url }}" target="_blank">
-                                            <p>{{ media.expanded_url }}</p>
+                                        <a href="{{ url.url }}" target="_blank">
+                                            <p>{{ url.url }}</p>
                                         </a>
-{#                                        <a href="{{ media.url }}" target="_blank">#}
-{#                                            <p>{{ media.url }}</p>#}
-{#                                        </a>#}
                                     {% endfor %}
-                                {% endif %}
-                                {#                                <p>Retweets: {{ tweet.retweeted_status.retweet_count }}#}
-                                {#                                    Favorites: {{ tweet.retweeted_status.favorite_count }} </p>#}
-                                <p><img class="retweet-icon" src="{% static 'images/twitter/retweet-arrow-twitter-512.png' %}"> {{ tweet.retweet_count }}
-                                    <img class="retweet-icon" src="{% static 'images/twitter/favorite-twitter-512.png' %}"> {{ tweet.favorite_count }} </p>
-                            </div>
-                        {% endif %}
+                                    {% if tweet.retweeted_status.media %}
+                                        <div>
+                                            {% for media in tweet.retweeted_status.media %}
+                                                {{ media.type }}
+                                                {% if media.type == "photo" %}
+                                                    <img class="tweet-photo" src={{ media.media_url_https }}>
+                                                {% elif media.type == "video" %}
+                                                    {% for variant in media.video_info.variants %}
+                                                        {% if variant.bitrate >= 2000000 %}
+                                                            <video class="tweet-video" controls>
+                                                                <source src={{ variant.url }} type="video/mp4">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+
+                                    <p><img class="retweet-icon"
+                                            src="{% static 'images/twitter/retweet-arrow-twitter-512.png' %}"> {{ tweet.retweeted_status.retweet_count }}
+                                        <img class="retweet-icon"
+                                             src="{% static 'images/twitter/favorite-twitter-512.png' %}"> {{ tweet.retweeted_status.favorite_count }}
+                                    </p>
+                                </div>
+                            {% else %}
+                                <div class="col-sm-2 text-right">
+                                    <img id="user-{{ tweet.user.screen_name }}"
+                                         src="{{ tweet.user.profile_image_url }}">
+                                </div>
+                                <div class="col-sm-10 ">
+                                    <div>
+                                        <a href="https://twitter.com/{{ tweet.user.screen_name }}"
+                                           target="_blank">
+                                            <span class="user-name">{{ tweet.user.name }}</span>
+                                            {% if tweet.user.verified %}
+                                                <span><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                                                           viewbox="0 0 24 24"
+                                                           class="htc-icon htc-icon--verified">
+                                                        <path style="fill: #1DA1F2" opacity="0" d="M0 0h24v24H0z"/>
+                                                        <path style="fill: #1DA1F2"
+                                                              d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5c-1.51 0-2.816.917-3.437 2.25-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/>
+                                            </svg></span>
+                                            {% endif %}
+                                            <span class="user-screen-name"> @{{ tweet.user.screen_name }}</span>
+                                        </a>
+                                        <span id="tweet-time-{{ tweet.id }}"></span>
+                                        <script type="text/javascript" src="{% static 'stats/js/tweets.js' %}"></script>
+                                        <script type="text/javascript"> getTimeSinceTweetPosted("{{ tweet.created_at }}", "tweet-time-{{ tweet.id }}") </script>
+                                    </div>
+                                    <div>{{ tweet.text }}</div>
+                                    {% if tweet.urls %}
+                                        {% for url in tweet.urls %}
+                                            <a href="{{ url.expanded_url }}" target="_blank">
+                                                <p>{{ url.expanded_url }}</p>
+                                            </a>
+                                            {#                                    <a href="{{ url.url }}" target="_blank">#}
+                                            {#                                        <p>{{ url.url }}</p>#}
+                                            {#                                    </a>#}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% if tweet.media %}
+                                        <div>
+                                            {% for media in tweet.media %}
+                                                {{ media.type }}
+                                                {% if media.type == "photo" %}
+                                                    <img class="tweet-photo" src={{ media.media_url_https }}>
+                                                {% elif media.type == "video" %}
+                                                    {% for variant in media.video_info.variants %}
+                                                        {% if variant.bitrate >= 2000000 %}
+                                                            <video class="tweet-video" controls>
+                                                                <source src={{ variant.url }} type="video/mp4">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+                                    {% endif %}
+                                    {#                                <p>Retweets: {{ tweet.retweeted_status.retweet_count }}#}
+                                    {#                                    Favorites: {{ tweet.retweeted_status.favorite_count }} </p>#}
+                                    <p><img class="retweet-icon"
+                                            src="{% static 'images/twitter/retweet-arrow-twitter-512.png' %}"> {{ tweet.retweet_count }}
+                                        <img class="retweet-icon"
+                                             src="{% static 'images/twitter/favorite-twitter-512.png' %}"> {{ tweet.favorite_count }}
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-                {#                </a>#}
+                    {#                </a>#}
                 {% endif %}
             {% endfor %}
         </div>

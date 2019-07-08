@@ -1,5 +1,5 @@
 from __future__ import print_function
-from mysite.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY,TWITTER_CONSUMER_TOKEN_SECRET
+from refreshin.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY,TWITTER_CONSUMER_TOKEN_SECRET
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -9,11 +9,13 @@ import mlbgame
 import nba_api.stats.endpoints.leaguegamefinder as leaguegamefinder
 from nba_api.stats.static import teams
 
-import twitter
+
 from stats.models import Game, Team
 
 import datetime
 from datetime import datetime
+
+import twitter
 api = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
                   consumer_secret=TWITTER_CONSUMER_SECRET,
                   access_token_key=TWITTER_CONSUMER_ACCESS_TOKEN_KEY,

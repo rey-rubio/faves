@@ -68,6 +68,16 @@
     background-color: #fafafa;
 }
 
+.tweet-photo{
+    max-width:100%;
+    max-height:100%;
+    border-radius: 10px;
+}
+.tweet-video{
+    max-width:100%;
+    max-height:100%;
+    border-radius: 10px;
+}
 
 .retweet-header{
     /*color: darkgray;*/

@@ -44,11 +44,13 @@ h1 {
 }
 
 .dropdown{
-  ;
+
 }
 
 .dropdown:hover > .dropdown-menu {
-    display: block;
+  display: block;
+  /*top: -1px;*/
+
 }
 .dropdown > .dropdown-toggle:active {
     /*Without this, clicking will make it sticky*/

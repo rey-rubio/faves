@@ -1,4 +1,4 @@
-"""mysite URL Configuration
+"""refreshin URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -20,7 +20,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 urlpatterns = [
     url(r'^stats/', include('stats.urls')), #this line added
-    url(r'^detection/', include('detection.urls')), #this line added
+    # url(r'^detection/', include('detection.urls')), #this line added
     url(r'^polls/', include('polls.urls')), #this line added
     url(r'^admin/', admin.site.urls),
 ]

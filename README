@@ -1,0 +1,89 @@
+To run server:
+python manage.py runserver
+http://127.0.0.1:8000/stats/
+
+
+python --version
+Python version 3.6.4
+
+pip install Django
+python -m django --version
+pip show Django
+    Name: Django
+    Version: 2.2.3
+    Summary: A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
+    Home-page: https://www.djangoproject.com/
+    Author: Django Software Foundation
+    Author-email: foundation@djangoproject.com
+    License: BSD
+    Location: c:\users\russe\appdata\local\programs\python\python36-32\lib\site-packages
+    Requires: pytz, sqlparse
+    Required-by:
+
+pip install mlbgame
+pip show mlbgame
+    Name: mlbgame
+    Version: 2.5.0
+    Summary: An API to retrieve and read MLB GameDay data
+    Home-page: https://github.com/zachpanz88/mlbgame
+    Author: Zach Panzarino
+    Author-email: zach@panz.io
+    License: MIT
+    Location: c:\users\russe\appdata\local\programs\python\python36-32\lib\site-packages
+    Requires: lxml
+    Required-by:
+
+pip install nba_api
+pip show nba_api
+Name: nba-api
+    Version: 1.1.4
+    Summary: An API Client package to access the APIs for NBA.com
+    Home-page: https://github.com/swar/nba_api
+    Author: Swar Patel
+    Author-email: swar.m.patel@gmail.com
+    License: MIT
+    Location: c:\users\russe\appdata\local\programs\python\python36-32\lib\site-packages
+    Requires: requests
+    Required-by:
+
+
+
+pip install python-twitter
+pip show python-twitter
+    Name: python-twitter
+    Version: 3.5
+    Summary: A Python wrapper around the Twitter API
+    Home-page: https://github.com/bear/python-twitter
+    Author: The Python-Twitter Developers
+    Author-email: python-twitter@googlegroups.com
+    License: Apache License 2.0
+    Location: c:\users\russe\appdata\local\programs\python\python36-32\lib\site-packages
+    Requires: future, requests, requests-oauthlib
+    Required-by:
+
+
+pip install pandas
+pip show pandas
+    Name: pandas
+    Version: 0.24.2
+    Summary: Powerful data structures for data analysis, time series, and statistics
+    Home-page: http://pandas.pydata.org
+    Author: None
+    Author-email: None
+    License: BSD
+    Location: c:\users\russe\appdata\local\programs\python\python36-32\lib\site-packages
+    Requires: numpy, python-dateutil, pytz
+    Required-by:
+
+pip install psycopg2
+pip show psycopg2
+    Name: psycopg2
+    Version: 2.8.3
+    Summary: psycopg2 - Python-PostgreSQL Database Adapter
+    Home-page: http://initd.org/psycopg/
+    Author: Federico Di Gregorio
+    Author-email: fog@initd.org
+    License: LGPL with exceptions or ZPL
+    Location: c:\users\russe\appdata\local\programs\python\python36-32\lib\site-packages
+    Requires:
+    Required-by:
