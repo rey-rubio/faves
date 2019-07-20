@@ -10,8 +10,7 @@ import nba_api.stats.endpoints.leaguegamefinder as leaguegamefinder
 from nba_api.stats.static import teams
 
 
-from stats.models import Game, Team
-
+from stats.models import Sport, Team, Game
 import datetime
 from datetime import datetime
 
@@ -38,46 +37,51 @@ def nba(request):
 
 
 def get_nba_teams():
-    nba_teams_data = teams.get_teams()
-    nba_teams_data = sorted(nba_teams_data, key=lambda a: a['abbreviation'], reverse=False)
-    gamefinder = leaguegamefinder.LeagueGameFinder()
-    games = gamefinder.get_data_frames()[0]
-    games_1718 = games[games.SEASON_ID.str[-4:] == '2018']
-    nba_teams = []
-    for team in nba_teams_data:
-        print(team)
-        # Get columns from NBA API
-        team_games_1718 = games_1718[games_1718.TEAM_ABBREVIATION == team['abbreviation']]
-        team_games_1718_game_id = team_games_1718['GAME_ID'][:5]
-        team_games_1718_date = team_games_1718['GAME_DATE'][:5]
-        team_games_1718_matchup = team_games_1718['MATCHUP'][:5]
+    # nba_teams_data = teams.get_teams()
+    # nba_teams_data = sorted(nba_teams_data, key=lambda a: a['abbreviation'], reverse=False)
+    # gamefinder = leaguegamefinder.LeagueGameFinder()
+    # games = gamefinder.get_data_frames()[0]
+    # games_1718 = games[games.SEASON_ID.str[-4:] == '2018']
+    # nba_teams = []
+    # for team in nba_teams_data:
+    #     # print(team)
+    #     # Get columns from NBA API
+    #     team_games_1718 = games_1718[games_1718.TEAM_ABBREVIATION == team['abbreviation']]
+    #     team_games_1718_game_id = team_games_1718['GAME_ID'][:5]
+    #     team_games_1718_date = team_games_1718['GAME_DATE'][:5]
+    #     team_games_1718_matchup = team_games_1718['MATCHUP'][:5]
+    #
+    #     # Iterate through dates and matchup to create Games objects
+    #     games = []
+    #     for game_id, date, matchup in zip(team_games_1718_game_id, team_games_1718_date, team_games_1718_matchup):
+    #         matchup = matchup.replace(".", "")
+    #         home_team_name = ""
+    #         away_team_name = ""
+    #         if 'vs' in matchup:
+    #             away_team_name = matchup.split("vs")[1]
+    #             home_team_name = matchup.split("vs")[0]
+    #         elif '@' in matchup:
+    #             away_team_name = matchup.split("@")[0]
+    #             home_team_name = matchup.split("@")[1]
+    #
+    #         away_team_name = away_team_name.strip()
+    #         home_team_name = home_team_name.strip()
+    #         # print("%s %s vs %s" % (date, away_team_name, home_team_name))
+    #         games.append(Game(game_id, date, away_team_name, home_team_name))
+    #
+    #     # print(list(games))
+    #
+    #     # Create Team object
+    #     team_test = Team(team['id'], team['full_name'], team['nickname'], team['abbreviation'], "NBA")
+    #     # team_test.set_games(games) #####################################
+    #     print("%s = Team(team_id=%s,full_name='%s',nickname='%s',abbreviation='%s',sport=%s)" % (
+    #         team['abbreviation'], team['id'], team['full_name'], team['nickname'], team['abbreviation'],"NBA"))
+    #     print("%s.save()" % (team['abbreviation']))
+    #     # Append to array of Teams
+    #     nba_teams.append(team_test)
 
-        # Iterate through dates and matchup to create Games objects
-        games = []
-        for game_id, date, matchup in zip(team_games_1718_game_id, team_games_1718_date, team_games_1718_matchup):
-            matchup = matchup.replace(".", "")
-            home_team_name = ""
-            away_team_name = ""
-            if 'vs' in matchup:
-                away_team_name = matchup.split("vs")[1]
-                home_team_name = matchup.split("vs")[0]
-            elif '@' in matchup:
-                away_team_name = matchup.split("@")[0]
-                home_team_name = matchup.split("@")[1]
-
-            away_team_name = away_team_name.strip()
-            home_team_name = home_team_name.strip()
-            # print("%s %s vs %s" % (date, away_team_name, home_team_name))
-            games.append(Game(game_id, date, away_team_name, home_team_name))
-
-        print(list(games))
-
-        # Create Team object
-        team_test = Team(team['id'], team['full_name'], team['nickname'], team['abbreviation'], "NBA")
-        team_test.set_games(games)
-        # Append to array of Teams
-        nba_teams.append(team_test)
-
+    nba = Sport.objects.filter(abbreviation="NBA").first()
+    nba_teams = Team.objects.filter(sport=nba).order_by("abbreviation")
     print(nba_teams)
     context = {
         'nba_teams': nba_teams
@@ -168,15 +172,16 @@ def get_mlb_games_today():
 
 def get_mlb_teams():
     # print(get_mlb_teams.__name__)
-    mlb_teams_data = mlbgame.teams()
-
-    mlb_teams = []
-    for team in mlb_teams_data:
-        # print(team)
-        # print(team.team_id)
-
-        team_test = Team(team.team_id, team.club_full_name, team.aws_club_slug, team.display_code.upper(), "MLB")
-        mlb_teams.append(team_test)
+    # mlb_teams_data = mlbgame.teams()
+    #
+    # mlb_teams = []
+    # for team in mlb_teams_data:
+    #     # print(team.team_id)
+    #
+    #     team_test = Team(team.team_id, team.club_full_name, team.aws_club_slug, team.display_code.upper(), "MLB")
+    #     mlb_teams.append(team_test)
+        # print("%s = Team(team_id=%s,full_name='%s',nickname='%s',abbreviation='%s',sport='%s')" % (team.display_code.upper(), team.team_id, team.club_full_name, team.aws_club_slug, team.display_code.upper(), "MLB"))
+        # print("%s.save()" % (team.display_code.upper()))
 
     # game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
     # game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
@@ -207,10 +212,14 @@ def get_mlb_teams():
     # stats = mlbgame.player_stats(game.game_id)
     # for player in stats.home_batting:
     #     print(player)
+    mlb = Sport.objects.filter(abbreviation="MLB").first()
+    mlb_teams = Team.objects.filter(sport=mlb)
+
     print(mlb_teams)
     context = {
         'mlb_teams': mlb_teams
     }
+    print("........................................")
     return context
 
 
