@@ -1,32 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
-<!-- Load an icon library -->
-{#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
-
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
-<script type="text/javascript" src="{% static 'stats/js/scripts.js' %}"></script>
-
 <head>
+    <meta charset="UTF-8">
+    <title> Home | StuffHub</title>
+    {% load static %}
     {% include "stats/navbar.html" with active_tab='index' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="{% static 'stats/js/scripts.js' %}"></script>
 </head>
-{##}
-{#<h1>Rey's MLB Stats</h1>#}
-{#<div class="card-row">#}
-{#    {% for mlb_team in mlb_teams %}#}
-{##}
-{#        <div class="card-column">#}
-{#            <div class="card">#}
-{#                <div class="container">#}
-{#                    <h3>{{ mlb_team }}</h3>#}
-{#                    <p>{{ mlb_team.team_id }}</p>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    {% endfor %}#}
-{#</div>#}
-
 
 <body>
 

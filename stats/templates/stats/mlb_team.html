@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
 <head>
     <meta charset="UTF-8">
-    {% include "stats/navbar.html" with active_tab='mlb' %}
+    <title> {{ team | title }} | StuffHub </title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
 </head>
+
 <body>
+    {% include "stats/navbar.html" with active_tab='mlb' %}
     {{ team }}
 </body>
 </html>

@@ -1,5 +1,6 @@
 from django.db import models
 
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
 # class Game:
 #
@@ -31,6 +32,11 @@ from django.db import models
 #     def __repr__(self):
 #         return "%s (%s)" % (self.full_name, self.abbreviation)
 
+
+# class User(AbstractUser):
+#     full_name = models.CharField(max_length=100, blank=False)
+#     age = models.PositiveIntegerField(null=True, blank=True)
+
 # NBA = "NBA"
 # MLB = "MLB"
 class Sport(models.Model):
@@ -49,6 +55,8 @@ class Team(models.Model):
     sport = models.ForeignKey(Sport, on_delete=models.CASCADE, null=True)
 
     def __repr__(self):
+        return "%s (%s)" % (self.full_name, self.abbreviation)
+    def __str__(self):
         return "%s (%s)" % (self.full_name, self.abbreviation)
 
 class Game(models.Model):
