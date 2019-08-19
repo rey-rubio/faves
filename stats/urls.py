@@ -6,6 +6,9 @@ urlpatterns = [
     # path('', views.IndexView.as_view(), name='index'),
 
     path('', views.index, name='index'),
+    path('login', views.login, name='login'),
+    path('register', views.register, name='register'),
+    path('logout', views.logout, name='logout'),
     path('nba/', views.nba, name='nba'),
     path('nba/tweets', views.nba_tweets, name='nba_tweets'),
     path('nba/tweets/<str:sport>/', views.add_twitter_user, name='add_twitter_user'),

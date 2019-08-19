@@ -1,9 +1,17 @@
 from __future__ import print_function
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as login_user
+from django.contrib.auth import logout as logout_user
 from stuffhub.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY,TWITTER_CONSUMER_TOKEN_SECRET
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.shortcuts import redirect
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.conf import settings
+from django.db import connection
 import mlbgame
 
 import nba_api.stats.endpoints.leaguegamefinder as leaguegamefinder
@@ -21,11 +29,44 @@ api = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
                   access_token_secret=TWITTER_CONSUMER_TOKEN_SECRET)
 
 def index(request):
-    # mlb_teams = mlbgame.teams()
-    # context = get_teams()
+    print(index.__name__)
+    print(request)
+    print(request.get_full_path())
+    if request.user.is_authenticated:
+        return render(request, 'stats/index.html')
+    else:
+        return render(request, 'stats/login.html')
 
-    return render(request, 'stats/index.html', )
+        
+def login(request):
+    print(login.__name__)
+    print(request)
+    print(request.get_full_path())
+    if request.method == 'POST':
+        try:
+            user = authenticate(email=request.POST.get('email', None), password=request.POST.get('password', None))
+            if user is not None:
+                login_user(request,user)
+                return HttpResponseRedirect(reverse('stats:index'))
+            else:
+                return HttpResponseRedirect(reverse('stats:login_view'))
+            
+        except Exception as err:
+            print(err.message)
+            for i in err.message:
+                print(i)
 
+    return render(request, 'stats/login.html')
+
+# def login_user(request):
+    
+
+def register(request):
+    return render(request, 'stats/register.html')
+    
+def logout(request):
+    logout_user(request)
+    return render(request, 'stats/login.html')
 #################################################################
 #################################################################
 #################################################################
@@ -252,7 +293,6 @@ def mlb_tweets(request):
     return render(request, 'stats/tweets.html', context )
 
 
-
 def add_twitter_user(request, sport):
     print(add_twitter_user.__name__)
     print(request)
@@ -290,8 +330,6 @@ def add_twitter_user(request, sport):
                 #                            key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
                 #                            reverse=True)
                 return HttpResponseRedirect(reverse('stats:mlb_tweets'))
-
-
 
         except Exception as err:
             print(err.message)
