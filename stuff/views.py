@@ -1,43 +1,37 @@
 from __future__ import print_function
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as login_user
-from django.contrib.auth import logout as logout_user
-from stuffhub.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY,TWITTER_CONSUMER_TOKEN_SECRET
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
-from django.shortcuts import redirect
-from django.contrib import messages
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from django.conf import settings
-from django.db import connection
-import mlbgame
 
-import nba_api.stats.endpoints.leaguegamefinder as leaguegamefinder
-from nba_api.stats.static import teams
-
-
-from stats.models import Sport, Team, Game
 import datetime
 from datetime import datetime
 
+import mlbgame
 import twitter
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as login_user
+from django.contrib.auth import logout as logout_user
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+
+from stuff.models import Sport, Team
+from stuffhub.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
+    TWITTER_CONSUMER_TOKEN_SECRET
+
 api = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
                   consumer_secret=TWITTER_CONSUMER_SECRET,
                   access_token_key=TWITTER_CONSUMER_ACCESS_TOKEN_KEY,
                   access_token_secret=TWITTER_CONSUMER_TOKEN_SECRET)
+
 
 def index(request):
     print(index.__name__)
     print(request)
     print(request.get_full_path())
     if request.user.is_authenticated:
-        return render(request, 'stats/index.html')
+        return render(request, 'stuff/index.html')
     else:
-        return render(request, 'stats/login.html')
+        return render(request, 'stuff/login.html')
 
-        
+
 def login(request):
     print(login.__name__)
     print(request)
@@ -46,27 +40,35 @@ def login(request):
         try:
             user = authenticate(email=request.POST.get('email', None), password=request.POST.get('password', None))
             if user is not None:
-                login_user(request,user)
-                return HttpResponseRedirect(reverse('stats:index'))
+                login_user(request, user)
+                return HttpResponseRedirect(reverse('stuff:index'))
             else:
-                return HttpResponseRedirect(reverse('stats:login_view'))
-            
+                return HttpResponseRedirect(reverse('stuff:login_view'))
+
         except Exception as err:
             print(err.message)
             for i in err.message:
                 print(i)
 
-    return render(request, 'stats/login.html')
+    return render(request, 'stuff/login.html')
+
 
 # def login_user(request):
-    
+
 
 def register(request):
-    return render(request, 'stats/register.html')
-    
+    return render(request, 'stuff/register.html')
+
+
 def logout(request):
     logout_user(request)
-    return render(request, 'stats/login.html')
+    return render(request, 'stuff/login.html')
+
+
+def influencers(request):
+    return render(request, 'stuff/influencers.html')
+
+
 #################################################################
 #################################################################
 #################################################################
@@ -74,7 +76,7 @@ def logout(request):
 def nba(request):
     # mlb_teams = mlbgame.teams()
     context = get_nba_teams()
-    return render(request, 'stats/nba.html', context)
+    return render(request, 'stuff/nba.html', context)
 
 
 def get_nba_teams():
@@ -129,12 +131,16 @@ def get_nba_teams():
 
     }
     print("........................................")
-    # return render(request, 'stats/index.html', context)
+    # return render(request, 'stuff/index.html', context)
     return context
+
 
 tweets_nba = {}
 tweets_nba = set(tweets_nba)
-users_nba = {"NBA", "wojespn", "ShamsCharania", "ZachLowe_NBA", "sam_amick", "TheSteinLine", "ChrisBHaynes", "davidaldridgedc", "WindhorstESPN"}
+users_nba = {"NBA", "wojespn", "ShamsCharania", "ZachLowe_NBA", "sam_amick", "TheSteinLine", "ChrisBHaynes",
+             "davidaldridgedc", "WindhorstESPN"}
+
+
 def nba_tweets(request):
     print(nba_tweets.__name__)
     print(request)
@@ -143,8 +149,8 @@ def nba_tweets(request):
         data = api.GetUserTimeline(screen_name=user, count=5)
 
         for new_tweet in data:
-            #print(new_tweet)
-            #print(new_tweet.id)
+            # print(new_tweet)
+            # print(new_tweet.id)
             if not any(new_tweet.id == tweet.id for tweet in tweets_nba):
                 tweets_nba.add(new_tweet)
 
@@ -158,7 +164,8 @@ def nba_tweets(request):
         'users': users_nba
     }
 
-    return render(request, 'stats/tweets.html', context)
+    return render(request, 'stuff/tweets.html', context)
+
 
 #################################################################
 #################################################################
@@ -169,7 +176,7 @@ def mlb(request):
     context = {}
     context.update(get_mlb_teams())
     context.update(get_mlb_games_today())
-    return render(request, 'stats/mlb.html', context)
+    return render(request, 'stuff/mlb.html', context)
 
 
 def mlb_team(request, team_name):
@@ -185,7 +192,7 @@ def mlb_team(request, team_name):
         "team": this_team
 
     }
-    return render(request, 'stats/mlb_team.html', context)
+    return render(request, 'stuff/mlb_team.html', context)
 
 
 def get_mlb_games_today():
@@ -196,12 +203,12 @@ def get_mlb_games_today():
     for game in day:
         print(game.game_id)
     # print(game.game_id)
-        #test = mlbgame.box_score(game.game_id)
-        # mlbgame.overview(game.game_id)
-        # mlbgame.players(game.game_id)
-        # mlbgame.team_stats(game.game_id)
-        # mlbgame.player_stats(game.game_id)
-        # mlbgame.game_events(game.game_id)
+    # test = mlbgame.box_score(game.game_id)
+    # mlbgame.overview(game.game_id)
+    # mlbgame.players(game.game_id)
+    # mlbgame.team_stats(game.game_id)
+    # mlbgame.player_stats(game.game_id)
+    # mlbgame.game_events(game.game_id)
 
     print(day)
     context = {
@@ -221,8 +228,8 @@ def get_mlb_teams():
     #
     #     team_test = Team(team.team_id, team.club_full_name, team.aws_club_slug, team.display_code.upper(), "MLB")
     #     mlb_teams.append(team_test)
-        # print("%s = Team(team_id=%s,full_name='%s',nickname='%s',abbreviation='%s',sport='%s')" % (team.display_code.upper(), team.team_id, team.club_full_name, team.aws_club_slug, team.display_code.upper(), "MLB"))
-        # print("%s.save()" % (team.display_code.upper()))
+    # print("%s = Team(team_id=%s,full_name='%s',nickname='%s',abbreviation='%s',sport='%s')" % (team.display_code.upper(), team.team_id, team.club_full_name, team.aws_club_slug, team.display_code.upper(), "MLB"))
+    # print("%s.save()" % (team.display_code.upper()))
 
     # game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
     # game = mlbgame.day(2019, 5, 28, home='Yankees')[0]
@@ -230,18 +237,18 @@ def get_mlb_teams():
     # print("Index Stats 1")
     # print(month)
     # print(game.game_id)
-    # stats = mlbgame.player_stats(game.game_id)
+    # stuff = mlbgame.player_stats(game.game_id)
     # games = mlbgame.combine_games(month)
     # print("Index Stats 2")
-    # # print(stats)
-    # # for player in stats.home_batting:
+    # # print(stuff)
+    # # for player in stuff.home_batting:
     # #     print(player)
     #
     # print("Index Stats 3")
     # # for game in games:
     # #     print(game)
     #
-    # # for player in stats.home_batting:
+    # # for player in stuff.home_batting:
     # #     print(player)
     #
     # day = mlbgame.day(2015, 4, 12, home='Royals', away='Royals')
@@ -250,8 +257,8 @@ def get_mlb_teams():
     # print(output % (game.w_pitcher, game.w_team, game.l_pitcher, game.l_team))
     #
     # game = mlbgame.day(2015, 11, 1, home='Mets')[0]
-    # stats = mlbgame.player_stats(game.game_id)
-    # for player in stats.home_batting:
+    # stuff = mlbgame.player_stats(game.game_id)
+    # for player in stuff.home_batting:
     #     print(player)
     mlb = Sport.objects.filter(abbreviation="MLB").first()
     mlb_teams = Team.objects.filter(sport=mlb)
@@ -266,9 +273,10 @@ def get_mlb_teams():
 
 tweets_mlb = {}
 tweets_mlb = set(tweets_mlb)
-users_mlb = {"MLB", "Yankees", "JeffPassan", "mlbtraderumors", "Ken_Rosenthal", "JonHeymanCBS", "Buster_ESPN"	}
-def mlb_tweets(request):
+users_mlb = {"MLB", "Yankees", "JeffPassan", "mlbtraderumors", "Ken_Rosenthal", "JonHeymanCBS", "Buster_ESPN"}
 
+
+def mlb_tweets(request):
     print(mlb_tweets.__name__)
     print(request)
     print(request.get_full_path())
@@ -276,12 +284,13 @@ def mlb_tweets(request):
         data = api.GetUserTimeline(screen_name=user, count=5)
 
         for new_tweet in data:
-            #print(new_tweet)
-            #print(new_tweet.id)
+            # print(new_tweet)
+            # print(new_tweet.id)
             if not any(new_tweet.id == tweet.id for tweet in tweets_mlb):
                 tweets_mlb.add(new_tweet)
 
-    sorted_tweets_mlb = sorted(tweets_mlb, key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'), reverse=True )
+    sorted_tweets_mlb = sorted(tweets_mlb, key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
+                               reverse=True)
 
     print(tweets_mlb)
     context = {
@@ -290,7 +299,7 @@ def mlb_tweets(request):
         'users': users_mlb
     }
 
-    return render(request, 'stats/tweets.html', context )
+    return render(request, 'stuff/tweets.html', context)
 
 
 def add_twitter_user(request, sport):
@@ -301,12 +310,12 @@ def add_twitter_user(request, sport):
     if request.method == 'POST':
         user = request.POST.get('add_twitter_user', None)
         print(user)
-        #print(users_nba)
+        # print(users_nba)
         # messages.info(request, 'Successfully added user' + user)
         try:
             data = api.GetUserTimeline(screen_name=user, count=5)
-            #print(new_tweet)
-            #print(new_tweet.id)
+            # print(new_tweet)
+            # print(new_tweet.id)
             if (sport.lower() == "nba"):
                 print("nba!!!")
                 for new_tweet in data:
@@ -317,7 +326,7 @@ def add_twitter_user(request, sport):
                 # sorted_tweets_nba = sorted(tweets_nba,
                 #                            key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
                 #                            reverse=True)
-                return HttpResponseRedirect(reverse('stats:nba_tweets'))
+                return HttpResponseRedirect(reverse('stuff:nba_tweets'))
 
             elif (sport.lower() == "mlb"):
                 print("mlb!!!")
@@ -329,7 +338,7 @@ def add_twitter_user(request, sport):
                 # sorted_tweets_mlb = sorted(tweets_mlb,
                 #                            key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
                 #                            reverse=True)
-                return HttpResponseRedirect(reverse('stats:mlb_tweets'))
+                return HttpResponseRedirect(reverse('stuff:mlb_tweets'))
 
         except Exception as err:
             print(err.message)
@@ -338,10 +347,8 @@ def add_twitter_user(request, sport):
 
         # print(request.POST['user'])
     # if ("nba" in request.get_full_path()):
-    #     return HttpResponseRedirect(reverse('stats:nba_tweets'))
+    #     return HttpResponseRedirect(reverse('stuff:nba_tweets'))
     # elif ("mlb" in request.get_full_path()):
-    #     return HttpResponseRedirect(reverse('stats:mlb_tweets'))
+    #     return HttpResponseRedirect(reverse('stuff:mlb_tweets'))
     # else:
-    #     return HttpResponseRedirect(reverse('stats:nba_tweets'))
-
-
+    #     return HttpResponseRedirect(reverse('stuff:nba_tweets'))

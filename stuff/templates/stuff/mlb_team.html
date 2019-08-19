@@ -5,11 +5,11 @@
     <title> {{ team | title }} | StuffHub </title>
 
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'stats/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/index.css' %}">
 </head>
 
 <body>
-    {% include "stats/navbar.html" with active_tab='mlb' %}
+{% include "stuff/navbar.html" with active_tab='mlb' %}
     {{ team }}
 </body>
 </html>

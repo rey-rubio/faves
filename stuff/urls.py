@@ -1,7 +1,8 @@
 from django.urls import path
+
 from . import views
 
-app_name = 'stats'
+app_name = 'stuff'
 urlpatterns = [
     # path('', views.IndexView.as_view(), name='index'),
 
@@ -9,6 +10,7 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('register', views.register, name='register'),
     path('logout', views.logout, name='logout'),
+    path('influencers/', views.influencers, name='influencers'),
     path('nba/', views.nba, name='nba'),
     path('nba/tweets', views.nba_tweets, name='nba_tweets'),
     path('nba/tweets/<str:sport>/', views.add_twitter_user, name='add_twitter_user'),

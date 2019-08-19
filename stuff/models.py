@@ -1,5 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager)
+from django.db import models
+
+
 # from django.contrib.auth.models import AbstractUser
 # Create your models here.
 # class Game:
@@ -111,6 +113,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class User(AbstractBaseUser):
     user_id         = models.AutoField(primary_key=True)
     email           = models.EmailField(max_length=255, unique=True)
@@ -201,39 +204,50 @@ class Team(models.Model):
     def __str__(self):
         return "%s (%s)" % (self.full_name, self.abbreviation)
 
+
 class Game(models.Model):
     api_id              = models.IntegerField(unique=True, null=True)
     home_team_id        = models.ForeignKey(Team, null=True, on_delete=models.CASCADE, related_name='home_team_id')
     away_team_id        = models.ForeignKey(Team, null=True, on_delete=models.CASCADE, related_name='away_team_id')
     date                = models.DateTimeField(null=True)
 
-#test
-#test
+
 class Player(models.Model):
     api_id              = models.IntegerField(unique=True, null=True)
     first_name          = models.CharField(max_length=50, null=True)
     last_name           = models.CharField(max_length=50, null=True)
     team                = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
 
+
 class Influencer(models.Model):
     first_name          = models.CharField(max_length=50, null=True)
     last_name           = models.CharField(max_length=50, null=True)
     nickname            = models.CharField(max_length=50, null=True)
 
+
 class SocialMedia(models.Model):
     influencer          = models.ForeignKey(Influencer, on_delete=models.CASCADE, null=True)
+
 
 class Twitter(models.Model):
     social_media        = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
     api_id              = models.IntegerField(unique=True, null=True)
     handle              = models.CharField(max_length=50, null=True)
 
-class Facebook(models.Model):
-    social_media        = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
-    api_id              = models.IntegerField(unique=True, null=True)
-    handle              = models.CharField(max_length=50, null=True)
 
 class Instagram(models.Model):
+    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
+    api_id = models.IntegerField(unique=True, null=True)
+    handle = models.CharField(max_length=50, null=True)
+
+
+class Youtube(models.Model):
+    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
+    api_id = models.IntegerField(unique=True, null=True)
+    handle = models.CharField(max_length=50, null=True)
+
+
+class Facebook(models.Model):
     social_media        = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
     api_id              = models.IntegerField(unique=True, null=True)
     handle              = models.CharField(max_length=50, null=True)
