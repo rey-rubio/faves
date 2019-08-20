@@ -12,7 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from stuff.models import Sport, Team
+from stuff.models import Sport, Team, Influencer, SocialMedia, Twitter, Instagram, Youtube, Facebook
 from stuffhub.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
     TWITTER_CONSUMER_TOKEN_SECRET
 
@@ -20,17 +20,6 @@ api = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
                   consumer_secret=TWITTER_CONSUMER_SECRET,
                   access_token_key=TWITTER_CONSUMER_ACCESS_TOKEN_KEY,
                   access_token_secret=TWITTER_CONSUMER_TOKEN_SECRET)
-
-
-def index(request):
-    print(index.__name__)
-    print(request)
-    print(request.get_full_path())
-    if request.user.is_authenticated:
-        return render(request, 'stuff/index.html')
-    else:
-        return render(request, 'stuff/login.html')
-
 
 def login(request):
     print(login.__name__)
@@ -65,10 +54,115 @@ def logout(request):
     return render(request, 'stuff/login.html')
 
 
+def index(request):
+    print(index.__name__)
+    print(request)
+    print(request.get_full_path())
+    if not request.user.is_authenticated:
+        return render(request, 'stuff/login.html')
+
+    return render(request, 'stuff/index.html')
+
+
 def influencers(request):
-    return render(request, 'stuff/influencers.html')
+    context = get_influencers()
+    return render(request, 'stuff/influencers.html', context)
 
 
+def get_influencers():
+    entertainment = get_influencers_helper('Entertainment')
+    fashion = get_influencers_helper('Fashion')
+    food = get_influencers_helper('Food')
+    gaming = get_influencers_helper('Gaming')
+    makeup = get_influencers_helper('Makeup')
+    sports_fitness = get_influencers_helper('Sports/Fitness')
+    travel = get_influencers_helper('Travel')
+    vlogging = get_influencers_helper('Vlogging')
+
+    influencers = {
+        'entertainment': entertainment,
+        'fashion': fashion,
+        'food': food,
+        'gaming': gaming,
+        'makeup': makeup,
+        'sports_fitness': sports_fitness,
+        'travel': travel,
+        'vlogging': vlogging
+    }
+
+    # for industry in influencers:
+    #     for influencer in industry:
+    #         # print(influencer)
+
+    # influencers = Influencer.objects.filter()
+    # mlb_teams = Team.objects.filter(sport=mlb)
+
+    # print(influencers)
+    # context = {
+    #     'influencers': influencers
+    # }
+    print("........................................")
+    return influencers
+
+
+def get_influencers_helper(industry):
+    print(industry)
+    # get influencers from a particular industry
+    influencers = Influencer.objects.filter(industry=industry).order_by("level")
+
+    influencers_map = []
+    for influencer in influencers:
+        print("influencer ........................................")
+        print(influencer)
+        print("social_media_id ........................................")
+        # get social_media_id of particular influencer
+        social_media_id = SocialMedia.objects.filter(influencer=influencer).first()
+        print(social_media_id)
+
+        influencer_map = {
+            'id': influencer.id,
+            'first_name': influencer.first_name,
+            'last_name': influencer.last_name,
+            'nickname': influencer.nickname,
+            'level': influencer.level,
+            'industry': influencer.industry,
+            'twitter': '',
+            'instagram': '',
+            'youtube': '',
+            'facebook': ''
+        }
+        print("twitter ........................................")
+        # get all social medias using social_media id
+        twitter = Twitter.objects.filter(social_media=social_media_id.id).order_by("id").first()
+        print(twitter)
+        print(twitter.handle)
+
+        if twitter is not None:
+            influencer_map.update({'twitter': twitter.handle})
+
+        print("instagram ........................................")
+        instagram = Instagram.objects.filter(social_media=social_media_id.id).order_by("id").first()
+        print(instagram)
+        if instagram is not None:
+            influencer_map.update({'instagram': instagram.handle})
+
+        print("youtube ........................................")
+        youtube = Youtube.objects.filter(social_media=social_media_id.id).order_by("id").first()
+        print(youtube)
+        if youtube is not None:
+            influencer_map.update({'youtube': youtube.handle})
+
+        print("facebook  ........................................")
+        facebook = Facebook.objects.filter(social_media=social_media_id.id).order_by("id").first()
+        print(facebook)
+        if facebook is not None:
+            influencer_map.update({'facebook': facebook.handle})
+
+        print("........................................")
+
+        influencers_map.append(influencer_map)
+
+    return influencers_map
 #################################################################
 #################################################################
 #################################################################
@@ -274,8 +368,6 @@ def get_mlb_teams():
 tweets_mlb = {}
 tweets_mlb = set(tweets_mlb)
 users_mlb = {"MLB", "Yankees", "JeffPassan", "mlbtraderumors", "Ken_Rosenthal", "JonHeymanCBS", "Buster_ESPN"}
-
-
 def mlb_tweets(request):
     print(mlb_tweets.__name__)
     print(request)

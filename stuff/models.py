@@ -206,48 +206,111 @@ class Team(models.Model):
 
 
 class Game(models.Model):
-    api_id              = models.IntegerField(unique=True, null=True)
     home_team_id        = models.ForeignKey(Team, null=True, on_delete=models.CASCADE, related_name='home_team_id')
     away_team_id        = models.ForeignKey(Team, null=True, on_delete=models.CASCADE, related_name='away_team_id')
     date                = models.DateTimeField(null=True)
+    api_id = models.IntegerField(unique=True, null=True)
+
+    def __repr__(self):
+        return "%s %s %s %s %s" % (self.id, self.home_team_id, self.away_team_id, self.date, self.api_id)
+
+    def __str__(self):
+        return "%s %s %s %s %s" % (self.id, self.home_team_id, self.away_team_id, self.date, self.api_id)
 
 
 class Player(models.Model):
-    api_id              = models.IntegerField(unique=True, null=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
     first_name          = models.CharField(max_length=50, null=True)
     last_name           = models.CharField(max_length=50, null=True)
-    team                = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
+    api_id = models.IntegerField(unique=True, null=True)
+
+    def __repr__(self):
+        return "%s %s %s %s %s" % (self.id, self.team, self.first_name, self.last_name, self.api_id)
+
+    def __str__(self):
+        return "%s %s %s %s %s" % (self.id, self.team, self.first_name, self.last_name, self.api_id)
 
 
 class Influencer(models.Model):
     first_name          = models.CharField(max_length=50, null=True)
     last_name           = models.CharField(max_length=50, null=True)
     nickname            = models.CharField(max_length=50, null=True)
+    level = models.CharField(max_length=50, null=True)
+    industry = models.CharField(max_length=50, null=True)
+
+    def __repr__(self):
+        return "%s %s %s %s %s %s" % (
+        self.id, self.first_name, self.last_name, self.nickname, self.level, self.industry)
+
+    def __str__(self):
+        return "%s %s %s %s %s %s" % (
+        self.id, self.first_name, self.last_name, self.nickname, self.level, self.industry)
 
 
 class SocialMedia(models.Model):
     influencer          = models.ForeignKey(Influencer, on_delete=models.CASCADE, null=True)
 
+    def __repr__(self):
+        return "%s %s" % (self.id, self.influencer)
+
+    def __str__(self):
+        return "%s %s" % (self.id, self.influencer)
+
 
 class Twitter(models.Model):
     social_media        = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
+    handle = models.CharField(max_length=50, null=True)
     api_id              = models.IntegerField(unique=True, null=True)
-    handle              = models.CharField(max_length=50, null=True)
+
+    def __repr__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
+
+    def __str__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
 
 
 class Instagram(models.Model):
     social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
-    api_id = models.IntegerField(unique=True, null=True)
     handle = models.CharField(max_length=50, null=True)
+    api_id = models.IntegerField(unique=True, null=True)
+
+    def __repr__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
+
+    def __str__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
 
 
 class Youtube(models.Model):
     social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
-    api_id = models.IntegerField(unique=True, null=True)
     handle = models.CharField(max_length=50, null=True)
+    api_id = models.IntegerField(unique=True, null=True)
+
+    def __repr__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
+
+    def __str__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
 
 
 class Facebook(models.Model):
     social_media        = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, null=True)
-    api_id              = models.IntegerField(unique=True, null=True)
     handle              = models.CharField(max_length=50, null=True)
+    api_id = models.IntegerField(unique=True, null=True)
+
+    def __repr__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
+
+    def __str__(self):
+        return "%s %s %s %s" % (self.id, self.social_media, self.handle, self.api_id)
+
+
+class Interest(models.Model):
+    influencer = models.ForeignKey(Influencer, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+    def __repr__(self):
+        return "[influencer = %s] [user = %s] " % (self.influencer, self.user)
+
+    def __str__(self):
+        return "[influencer = %s] [user = %s] " % (self.influencer, self.user)

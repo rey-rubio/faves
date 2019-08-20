@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/flip_cards.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="{% static 'stuff/js/scripts.js' %}"></script>
+</head>
+<div class="d-flex flex-column ml-2">
+    <div class="flip-card">
+        <div class="flip-card-title">
+            <h3 class="card-title">
+                {{ influencer.first_name }} {{ influencer.last_name }}
+            </h3>
+        </div>
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <img
+                        class="team-logo"
+                        src="
+
+                                {% static 'images/influencers/' %}{{ influencer.first_name|lower }}_{{ influencer.last_name|lower }}.png"
+                >
+            </div>
+            <div class="flip-card-back">
+                {% if influencer.twitter %}
+                    <a class="nav-link" href="https://twitter.com/{{ influencer.twitter }}" target="_blank">
+                        <i class="fab fa-twitter"></i> {{ influencer.twitter }}
+                    </a>
+                {% endif %}
+                {% if influencer.instagram %}
+                    <a class="nav-link" href="https:/instagram.com/{{ influencer.instagram }}" target="_blank">
+                        <i class="fab fa-instagram"></i> {{ influencer.instagram }}
+                    </a>
+                {% endif %}
+                {% if influencer.youtube %}
+                    <a class="nav-link" href="https://youtube.com/{{ influencer.youtube }}" target="_blank">
+                        <i class="fab fa-youtube"></i> {{ influencer.youtube }}
+                    </a>
+                {% endif %}
+                {% if influencer.facebook %}
+                    <a class="nav-link" href="https://facebook.com/{{ influencer.facebook }}" target="_blank">
+                        <i class="fab fa-facebook"></i> {{ influencer.facebook }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</html>

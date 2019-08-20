@@ -14,6 +14,7 @@ img.team-logo{
     perspective: 2000px; /* Remove this if you don't want the 3D effect */
     padding: 10px;
     border-radius: 15px;
+    background-color: whitesmoke
 }
 
 /* This container is needed to position the front and back side */
@@ -41,7 +42,7 @@ img.team-logo{
 
 /* Style the front side (fallback if image is missing) */
 .flip-card-front {
-    /*background-color: #bbb;*/
+    /*background-color: whitesmoke;*/
     /*color: black;*/
 }
 
