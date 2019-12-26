@@ -11,33 +11,49 @@
 </head>
 
 <body>
-<div class="container w-75">
-    {#        <div class="container-fluid">#}
-    <div class="row h-100 align-items-left">
-        <h2>Entertainment</h2>
+<section>
+    <div class="container">
+        <div class="row">
+            <h2>Entertainment</h2>
+        </div>
+        <div class="row">
+            {% for influencer in entertainment %}
+                {% include "stuff/influencer_card.html" %}
+            {% endfor %}
+        </div>
     </div>
-    <div class="row h-100 justify-content-left align-items-left">
-        {% for influencer in entertainment %}
-            {% include "stuff/influencer.html" %}
-        {% endfor %}
+    <div class="container">
+        <div class="row">
+            <h2>Entertainment</h2>
+        </div>
+        <div class="row">
+            {% for influencer in entertainment %}
+                {% include "stuff/influencer_card.html" %}
+            {% endfor %}
+        </div>
     </div>
-    <div class="row h-100 align-items-left">
-        <h2>Food</h2>
+    <div class="container">
+        <div class="row">
+            <h2>Food</h2>
+        </div>
+        <div class="row">
+            {% for influencer in food %}
+                {% include "stuff/influencer_card.html" %}
+            {% endfor %}
+        </div>
     </div>
-    <div class="row h-100 justify-content-left align-items-left">
-        {% for influencer in food %}
-            {% include "stuff/influencer.html" %}
-        {% endfor %}
+    <div class="container">
+        <div class="row">
+            <h2>Sports & Fitness</h2>
+        </div>
+        <div class="row">
+            {% for influencer in sports_fitness %}
+                {% include "stuff/influencer_card.html" %}
+            {% endfor %}
+        </div>
     </div>
-    <div class="row h-100 align-items-left">
-        <h2>Sports & Fitness</h2>
-    </div>
-    <div class="row h-100 justify-content-left align-items-left">
-        {% for influencer in sports_fitness %}
-            {% include "stuff/influencer.html" %}
-        {% endfor %}
-    </div>
-    {#        </div>#}
+</section>
+
 </div>
 
 </body>

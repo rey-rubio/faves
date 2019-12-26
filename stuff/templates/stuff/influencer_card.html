@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/flip_cards.css' %}">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/influencer_cards.css' %}">
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/font_awesome.css' %}">#}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="{% static 'stuff/js/scripts.js' %}"></script>
+</head>
+{#<div class="d-flex flex-column ml-2">#}
+<div class="col-md-4">
+    <div class="card profile-card-1">
+        <img src="https://images.pexels.com/photos/946351/pexels-photo-946351.jpeg?w=500&h=650&auto=compress&cs=tinysrgb"
+             alt="profile-sample1" class="background"/>
+        <img src="
+
+                {% static 'images/influencers/' %}{{ influencer.first_name|lower }}_{{ influencer.last_name|lower }}.png"
+             alt="profile-image" class="profile"/>
+        <div class="card-content">
+            <h2>{{ influencer.first_name }} {{ influencer.last_name }}
+                <small></small>
+            </h2>
+            <div class="icon-block">
+                {% if influencer.twitter %}
+                    <a href="https://twitter.com/{{ influencer.twitter }}" target="_blank"><i
+                            class="fab fa-twitter"></i></a>
+                {% endif %}
+                {% if influencer.instagram %}
+                    <a href="https://instagram.com/{{ influencer.instagram }}" target="_blank"><i
+                            class="fab fa-instagram"></i></a>
+                {% endif %}
+                {% if influencer.youtube %}
+                    <a href="https://youtube.com/{{ influencer.youtube }}" target="_blank"><i
+                            class="fab fa-youtube"></i></a>
+                {% endif %}
+                {% if influencer.facebook %}
+                    <a href="https://facebook.com/{{ influencer.facebook }}" target="_blank"><i
+                            class="fab fa-facebook"></i></a>
+                {% endif %}
+            </div>
+        </div>
+        <a href="{% url 'stuff:influencer' influencer.id %}" class="btn stretched-link"></a>
+    </div>
+</div>
+{#  </div>#}
+{#    <div class="flip-card">#}
+{#        <div class="flip-card-title">#}
+{#            <h3 class="card-title">#}
+{#                {{ influencer.first_name }} {{ influencer.last_name }}#}
+{#            </h3>#}
+{#        </div>#}
+{#        <div class="flip-card-inner">#}
+{#            <div class="flip-card-front">#}
+{#                <img#}
+{#                    class="team-logo"#}
+{#                    src="{% static 'images/influencers/' %}{{ influencer.first_name|lower }}_{{ influencer.last_name|lower }}.png"#}
+{#                >#}
+{#            </div>#}
+{#            <div class="flip-card-back">#}
+{#                {% if influencer.twitter %}#}
+{#                    <a class="fa fa-twitter" href="https://twitter.com/{{ influencer.twitter }}" target="_blank">#}
+{#                        <i class="fab fa-twitter"></i> {{ influencer.twitter }}#}
+{#                        {{ influencer.twitter }}#}
+{#                    </a>#}
+{#                    <a class="btn-floating btn-lg btn-tw" type="button" role="button"><i class="fab fa-twitter"></i></a>#}
+{#                {% endif %}#}
+{#                {% if influencer.instagram %}#}
+{#                    <a class="nav-link" href="https:/instagram.com/{{ influencer.instagram }}" target="_blank">#}
+{#                        <i class="fab fa-instagram"></i> {{ influencer.instagram }}#}
+{#                    </a>#}
+{#                {% endif %}#}
+{#                {% if influencer.youtube %}#}
+{#                    <a class="fa fa-youtube" href="https://youtube.com/{{ influencer.youtube }}" target="_blank">#}
+{#                        {{ influencer.youtube }}#}
+{#                    </a>#}
+{#                {% endif %}#}
+{#                {% if influencer.facebook %}#}
+{#                    <a class="nav-link" href="https://facebook.com/{{ influencer.facebook }}" target="_blank">#}
+{#                        <i class="fab fa-facebook"></i> {{ influencer.facebook }}#}
+{#                    </a>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+</html>
