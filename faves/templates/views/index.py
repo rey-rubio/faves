@@ -2,7 +2,7 @@ from django.shortcuts import render
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from stuffhub.settings import YOUTUBE_API_KEY
+from myfaves.settings import YOUTUBE_API_KEY
 
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
@@ -13,14 +13,14 @@ def index(request):
     print(request)
     print(request.get_full_path())
     if not request.user.is_authenticated:
-        return render(request, 'stuff/login.html')
+        return render(request, 'faves/login.html')
 
     try:
         youtube_search("JustKiddingPart")
     except HttpError as e:
         print("An HTTP error %d occurred:\n%s' % (e.resp.status, e.content)")
 
-    return render(request, 'stuff/index.html')
+    return render(request, 'faves/index.html')
 
 
 def youtube_search(options):

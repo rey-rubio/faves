@@ -3,8 +3,8 @@ from __future__ import print_function
 import twitter
 from django.shortcuts import render
 
-from stuff.models import Sport, Team
-from stuffhub.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
+from faves.models import Sport, Team
+from myfaves.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
     TWITTER_CONSUMER_TOKEN_SECRET
 
 TWITTER_API = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
@@ -18,7 +18,7 @@ from datetime import datetime
 
 def nba(request):
     context = get_nba_teams()
-    return render(request, 'stuff/nba.html', context)
+    return render(request, 'faves/nba.html', context)
 
 
 def get_nba_teams():
@@ -60,4 +60,4 @@ def nba_tweets(request):
         'users': users_nba
     }
 
-    return render(request, 'stuff/tweets.html', context)
+    return render(request, 'faves/tweets.html', context)

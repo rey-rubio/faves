@@ -5,7 +5,7 @@
     {% load static %}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/navbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/navbar.css' %}">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -29,12 +29,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item {% if active_tab == 'index' %}active{% endif %}">
-                            <a class="nav-link" href="{% url 'stuff:index' %}">
+                            <a class="nav-link" href="{% url 'faves:index' %}">
                                 <i class="fa fa-home"></i> Home <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item {% if active_tab == 'influencers' %}active{% endif %}">
-                            <a class="nav-link" href="{% url 'stuff:influencers' %}">
+                            <a class="nav-link" href="{% url 'faves:influencers' %}">
                                 <i class="fas fa-user-check"></i> Influencers
                             </a>
                         </li>
@@ -44,10 +44,10 @@
                                 <i class="fas fa-basketball-ball"></i> NBA
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'stuff:nba' %}">
+                                <a class="dropdown-item" href="{% url 'faves:nba' %}">
                                     <i class="fas fa-users"></i> Teams
                                 </a>
-                                <a class="dropdown-item" href="{% url 'stuff:nba_tweets' %}">
+                                <a class="dropdown-item" href="{% url 'faves:nba_tweets' %}">
                                     <i class="fab fa-twitter"></i> Tweets
                                 </a>
                                 {#                        <div class="dropdown-divider"></div>#}
@@ -55,16 +55,16 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown {% if active_tab == 'mlb' %}active{% endif %}">
-                            <a class="nav-link dropdown-toggle" href="{% url 'stuff:mlb' %}" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle" href="{% url 'faves:mlb' %}" id="navbarDropdown"
                                role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-baseball-ball"></i> MLB
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'stuff:mlb' %}">
+                                <a class="dropdown-item" href="{% url 'faves:mlb' %}">
                                     <i class="fas fa-users"></i> Teams
                                 </a>
-                                <a class="dropdown-item" href="{% url 'stuff:mlb_tweets' %}">
+                                <a class="dropdown-item" href="{% url 'faves:mlb_tweets' %}">
                                     <i class="fab fa-twitter"></i> Tweets
                                 </a>
                                 {#                        <div class="dropdown-divider"></div>#}
@@ -79,14 +79,14 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
-                        <form class="form-inline my-2 my-lg-0" action="{% url 'stuff:logout' %}">
+                        <form class="form-inline my-2 my-lg-0" action="{% url 'faves:logout' %}">
                             <button class="btn btn-danger my-2 my-sm-0" type="submit">Logout</button>
                         </form>
                     {% else %}
-                        <div><a class="btn btn-light my-2 my-sm-0" id="Register" href="/stuff/register">Register</a>
+                        <div><a class="btn btn-light my-2 my-sm-0" id="Register" href="/faves/register">Register</a>
                         </div>
 
-                        <div><a class="btn btn-success my-2 my-sm-0" id="Login" href="/stuff/login">Login</a></div>
+                        <div><a class="btn btn-success my-2 my-sm-0" id="Login" href="/faves/login">Login</a></div>
                     {% endif %}
                 </div>
             </nav>

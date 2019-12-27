@@ -3,8 +3,8 @@ from __future__ import print_function
 import twitter
 from django.shortcuts import render
 
-from stuff.models import Sport, Team
-from stuffhub.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
+from faves.models import Sport, Team
+from myfaves.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
     TWITTER_CONSUMER_TOKEN_SECRET
 
 TWITTER_API = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
@@ -23,7 +23,7 @@ def mlb(request):
     context = {}
     context.update(get_mlb_teams())
     context.update(get_mlb_games_today())
-    return render(request, 'stuff/mlb.html', context)
+    return render(request, 'faves/mlb.html', context)
 
 
 def mlb_team(request, team_name):
@@ -39,7 +39,7 @@ def mlb_team(request, team_name):
         "team": this_team
 
     }
-    return render(request, 'stuff/mlb_team.html', context)
+    return render(request, 'faves/mlb_team.html', context)
 
 
 def get_mlb_teams():
@@ -105,4 +105,4 @@ def mlb_tweets(request):
         'users': users_mlb
     }
 
-    return render(request, 'stuff/tweets.html', context)
+    return render(request, 'faves/tweets.html', context)

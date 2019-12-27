@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 def logout(request):
     logout_user(request)
-    return render(request, 'stuff/login.html')
+    return render(request, 'faves/login.html')

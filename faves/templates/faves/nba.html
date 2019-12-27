@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <title> NBA | StuffHub</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/index.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/nba.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/flip_cards.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/nba.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/flip_cards.css' %}">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
-    <script type="text/javascript" src="{% static 'stuff/js/scripts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'faves/js/scripts.js' %}"></script>
 </head>
 
 <body>
-{% include "stuff/navbar.html" with active_tab='nba' %}
+{% include "faves/navbar.html" with active_tab='nba' %}
     <div class="container w-75">
         <div class="container-fluid">
             <div class="row h-100 justify-content-center align-items-center">
@@ -32,7 +32,7 @@
                                     {#                            <canvas id="myCanvas-{{ nba_team.nickname|lower }}"#}
                                     {#                                    data-src="{{ nba_team.nickname|lower }}"#}
                                     {#                                    style="width:300px;height:300px;"></canvas>#}
-                                    {#                            <script type="text/javascript" src="{% static 'stuff/js/logos.js ' %}"></script>#}
+                                    {#                            <script type="text/javascript" src="{% static 'faves/js/logos.js ' %}"></script>#}
                                     {#                            <script type="text/javascript"> var static_url = "{% static 'images/'%}{{ nba_team.nickname|lower}}.jpg %}"; setTeamLogo("{{ nba_team.nickname|lower}}","{% static 'images/{{ nba_team.nickname|lower}}.jpg' %}" );#}
                                     {#                             </script>#}
 
@@ -54,7 +54,7 @@
                                             <p class="card-text">{{ game.date }} {{ game.away_team_name }}
                                                 @ {{ game.home_team_name }}</p>
                                         </a>
-                                        <script type="text/javascript" src="{% static 'stuff/js/logos.js ' %}"></script>
+                                        <script type="text/javascript" src="{% static 'faves/js/logos.js ' %}"></script>
                                         <script type="text/javascript"> getBoxScoreURL("{{ game.game_id }}", "{{ game.date }}", "{{ game.home_team_name }}", "box-score-url-{{ nba_team.abbreviation }}-{{ game.game_id }}"); </script>
                                     {% endfor %}
                                 </div>

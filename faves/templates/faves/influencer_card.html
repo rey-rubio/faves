@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     {% load static %}
-    {#    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/flip_cards.css' %}">#}
-    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/influencer_cards.css' %}">
-    {#    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/font_awesome.css' %}">#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/flip_cards.css' %}">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/influencer_cards.css' %}">
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/font_awesome.css' %}">#}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="{% static 'stuff/js/scripts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'faves/js/scripts.js' %}"></script>
 </head>
 {#<div class="d-flex flex-column ml-2">#}
 <div class="col-md-4">
@@ -43,7 +43,7 @@
                 {% endif %}
             </div>
         </div>
-        <a href="{% url 'stuff:influencer' influencer.id %}" class="btn stretched-link"></a>
+        <a href="{% url 'faves:influencer' influencer.id %}" class="btn stretched-link"></a>
     </div>
 </div>
 {#  </div>#}

@@ -7,12 +7,12 @@
     {% load static %}
 
     <title> {{ sport | upper }} Tweets | StuffHub</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/index.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'stuff/css/tweets.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'faves/css/tweets.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
-    <script type="text/javascript" src="{% static 'stuff/js/scripts.js' %}"></script>
-    {% include "stuff/navbar.html" %}
+    <script type="text/javascript" src="{% static 'faves/js/scripts.js' %}"></script>
+    {% include "faves/navbar.html" %}
 </head>
 
 <body>
@@ -24,9 +24,9 @@
                 <div class="container-fluid users">
 
                     <h5>Users</h5>
-                    {#                <form action ="{% url 'stuff:add_twitter_user' 'Rishi_Anand1' %}" class="form-inline my-2 my-lg-0">#}
+                    {#                <form action ="{% url 'faves:add_twitter_user' 'Rishi_Anand1' %}" class="form-inline my-2 my-lg-0">#}
                     <div class="row users-row-test">
-                        <form action="{% url 'stuff:add_twitter_user' sport %}" method="POST"
+                        <form action="{% url 'faves:add_twitter_user' sport %}" method="POST"
                               class="form-inline my-2 my-lg-0">
                             {% csrf_token %}
 
@@ -93,7 +93,7 @@
                                             <span class="user-screen-name"> @{{ tweet.retweeted_status.user.screen_name }}</span>
                                         </a>
                                         <span id="retweet-time-{{ tweet.id }}"></span>
-                                        <script type="text/javascript" src="{% static 'stuff/js/tweets.js' %}"></script>
+                                        <script type="text/javascript" src="{% static 'faves/js/tweets.js' %}"></script>
                                         <script type="text/javascript"> getTimeSinceTweetPosted("{{ tweet.created_at }}", "retweet-time-{{ tweet.id }}") </script>
 
                                     </div>
@@ -160,7 +160,7 @@
                                             <span class="user-screen-name"> @{{ tweet.user.screen_name }}</span>
                                         </a>
                                         <span id="tweet-time-{{ tweet.id }}"></span>
-                                        <script type="text/javascript" src="{% static 'stuff/js/tweets.js' %}"></script>
+                                        <script type="text/javascript" src="{% static 'faves/js/tweets.js' %}"></script>
                                         <script type="text/javascript"> getTimeSinceTweetPosted("{{ tweet.created_at }}", "tweet-time-{{ tweet.id }}") </script>
                                     </div>
                                     <div>{{ tweet.text }}</div>

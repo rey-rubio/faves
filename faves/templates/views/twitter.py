@@ -2,7 +2,7 @@ import twitter
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from stuffhub.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
+from myfaves.settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CONSUMER_ACCESS_TOKEN_KEY, \
     TWITTER_CONSUMER_TOKEN_SECRET
 
 TWITTER_API = twitter.Api(consumer_key=TWITTER_CONSUMER_KEY,
@@ -36,7 +36,7 @@ def add_twitter_user(request, sport):
                 # sorted_tweets_nba = sorted(tweets,
                 #                            key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
                 #                            reverse=True)
-                return HttpResponseRedirect(reverse('stuff:nba_tweets'))
+                return HttpResponseRedirect(reverse('faves:nba_tweets'))
 
             elif (sport.lower() == "mlb"):
                 print("mlb!!!")
@@ -48,7 +48,7 @@ def add_twitter_user(request, sport):
                 # sorted_tweets_mlb = sorted(tweets_mlb,
                 #                            key=lambda d: datetime.strptime(d.created_at, '%a %b %d %H:%M:%S %z %Y'),
                 #                            reverse=True)
-                return HttpResponseRedirect(reverse('stuff:mlb_tweets'))
+                return HttpResponseRedirect(reverse('faves:mlb_tweets'))
 
         except Exception as err:
             print(err.message)

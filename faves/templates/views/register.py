@@ -2,4 +2,4 @@ from django.shortcuts import render
 
 
 def register(request):
-    return render(request, 'stuff/register.html')
+    return render(request, 'faves/register.html')

@@ -1,4 +1,4 @@
-"""stuffhub URL Configuration
+"""myfaves URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 urlpatterns = [
-    url(r'^stuff/', include('stuff.urls')),  # this line added
+    url(r'^faves/', include('faves.urls')),  # this line added
     # url(r'^detection/', include('detection.urls')), #this line added
     # url(r'^polls/', include('polls.urls')), #this line added
     url(r'^admin/', admin.site.urls),

@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
-from stuff.models import Influencer, SocialMedia, Twitter, Instagram, Youtube, Facebook
+from faves.models import Influencer, SocialMedia, Twitter, Instagram, Youtube, Facebook
 
 
 def influencers(request):
     context = get_all_influencers()
-    return render(request, 'stuff/influencers.html', context)
+    return render(request, 'faves/influencers.html', context)
 
 
 def get_all_influencers():
@@ -55,7 +55,7 @@ def influencer(request, influencer_id):
         'influencer': influencer
     }
 
-    return render(request, 'stuff/influencer.html', context)
+    return render(request, 'faves/influencer.html', context)
 
 
 def get_influencer_by_id(influencer_id):

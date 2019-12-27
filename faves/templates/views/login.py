@@ -13,14 +13,16 @@ def login(request):
         try:
             user = authenticate(email=request.POST.get('email', None), password=request.POST.get('password', None))
             if user is not None:
+                print("Logging in")
                 login_user(request, user)
-                return HttpResponseRedirect(reverse('stuff:index'))
+                return HttpResponseRedirect(reverse('faves:index'))
             else:
-                return HttpResponseRedirect(reverse('stuff:login_view'))
+                print("Cant log in")
+                return HttpResponseRedirect(reverse('faves:login'))
 
         except Exception as err:
-            print(err.message)
+            print(err)
             for i in err.message:
                 print(i)
 
-    return render(request, 'stuff/login.html')
+    return render(request, 'faves/login.html')
